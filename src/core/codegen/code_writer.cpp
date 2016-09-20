@@ -12,6 +12,7 @@ Buf CodeWriter::get_buf() const noexcept {
   }
 
 MOCK(write_return())
+MOCK(write_swap(RegIndex, RegIndex))
 MOCK(write_assign(RegIndex, i32))
 MOCK(write_assign(RegIndex, i64))
 MOCK(write_add(RegIndex, i32))

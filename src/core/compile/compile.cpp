@@ -20,26 +20,19 @@ public:
     $writer->write_return();
   }
 
-  template<class DST, class SRC>
-  void write_assign() {
-    auto dst = $input.read<DST>();
-    auto src = $input.read<SRC>();
-    $writer->write_assign(dst, src);
-  }
-
-  template<class DST, class SRC>
-  void write_add() {
-    auto dst = $input.read<DST>();
-    auto src = $input.read<SRC>();
-    $writer->write_add(dst, src);
+  template<class A, class B>
+  void encode(void(CodeWriter::*method)(A, B)) {
+    auto a = $input.read<A>();
+    auto b = $input.read<B>();
+    ($writer->*method)(a, b);
   }
 
   void parse_assign() {
     switch ($input.read<u16>()) {
     case label(Token::REG, Token::I32):
-      return write_assign<RegIndex, i32>();
+      return encode<RegIndex, i32>(&CodeWriter::write_assign);
     case label(Token::REG, Token::I64):
-      return write_assign<RegIndex, i64>();
+      return encode<RegIndex, i64>(&CodeWriter::write_assign);
 
     default:
       throw "assign: invalid dst/src token";
@@ -49,11 +42,15 @@ public:
   void parse_add() {
     switch ($input.read<u16>()) {
     case label(Token::REG, Token::I32):
-      return write_add<RegIndex, i32>();
+      return encode<RegIndex, i32>(&CodeWriter::write_add);
 
     default:
       throw "add: invalid dst/src token";
     }
+  }
+
+  void parse_swap() {
+    encode<RegIndex, RegIndex>(&CodeWriter::write_swap);
   }
 
   Buf compile() {
@@ -68,6 +65,10 @@ public:
 
       case Token::ADD:
         parse_add();
+        break;
+
+      case Token::SWAP:
+        parse_swap();
         break;
 
       case Token::RETURN:

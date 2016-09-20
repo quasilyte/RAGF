@@ -10,6 +10,7 @@ enum class Token: byte {
   RETURN,
   ASSIGN,
   ADD,
+  SWAP,
 
   // Operand types
   REG,

@@ -2,11 +2,12 @@
 
 #include <core/typedefs.hpp>
 
-//                    ----WRXB
-const byte REX    = 0b01000000;
-const byte REX_W  = 0b01001000;
-const byte REX_B  = 0b01000001;
-const byte REX_WB = 0b01001001;
+//                     ----WRXB
+const byte REX     = 0b01000000;
+const byte REX_W   = 0b01001000;
+const byte REX_B   = 0b01000001;
+const byte REX_WB  = 0b01001001;
+const byte REX_WRB = 0b01001101;
 
 struct Mod {
   static const u64 SIB = 0;

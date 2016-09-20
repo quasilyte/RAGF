@@ -9,6 +9,14 @@ void CodeWriter::write_return() {
   $output.write_byte(0xC3);
 }
 
+void CodeWriter::write_swap(RegIndex a, RegIndex b) {
+  $output.write(BinaryValue<8>{
+    REX_WRB,
+    opcode(0x87),
+    mod_reg_rm(Mod::REG, a, b)
+  });
+}
+
 void CodeWriter::write_assign(RegIndex idx, i32 val) {
   $output.write(BinaryValue<8>{
     REX_WB,
