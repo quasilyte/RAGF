@@ -11,10 +11,11 @@ public:
 
   virtual void write_return();
   virtual void write_swap(RegIndex, RegIndex);
+  virtual void write_neg(RegIndex);
   virtual void write_assign(RegIndex, i32);
   virtual void write_assign(RegIndex, i64);
   virtual void write_add(RegIndex, i32);
-
+  virtual void write_add(RegIndex, i8);
 
 protected:
   CodeBuf $output;

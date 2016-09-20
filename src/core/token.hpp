@@ -11,6 +11,7 @@ enum class Token: byte {
   ASSIGN,
   ADD,
   SWAP,
+  NEG,
 
   // Operand types
   REG,

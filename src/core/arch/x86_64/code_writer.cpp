@@ -10,10 +10,18 @@ void CodeWriter::write_return() {
 }
 
 void CodeWriter::write_swap(RegIndex a, RegIndex b) {
-  $output.write(BinaryValue<8>{
+  $output.write(BinaryValue<4>{
     REX_WRB,
     opcode(0x87),
     mod_reg_rm(Mod::REG, a, b)
+  });
+}
+
+void CodeWriter::write_neg(RegIndex r) {
+  $output.write(BinaryValue<8>{
+    REX_WB,
+    opcode(0xF7),
+    mod_reg_rm(Mod::REG, 3, r)
   });
 }
 
@@ -36,6 +44,15 @@ void CodeWriter::write_add(RegIndex idx, i32 val) {
   $output.write(BinaryValue<8>{
     REX_WB,
     opcode(0x81),
+    mod_reg_rm(Mod::REG, 0, idx),
+    val
+  });
+}
+
+void CodeWriter::write_add(RegIndex idx, i8 val) {
+  $output.write(BinaryValue<8>{
+    REX_WB,
+    opcode(0x83),
     mod_reg_rm(Mod::REG, 0, idx),
     val
   });

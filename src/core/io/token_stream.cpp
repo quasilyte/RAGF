@@ -21,6 +21,12 @@ RegIndex TokenStream::read() noexcept {
   return RegIndex{index};
 }
 
+template<>
+i8 TokenStream::read() noexcept { return read_byte(); }
+
+template<>
+u8 TokenStream::read() noexcept { return read_byte(); }
+
 byte TokenStream::read_byte() noexcept {
   return *($pos++);
 }

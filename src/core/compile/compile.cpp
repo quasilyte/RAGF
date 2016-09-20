@@ -41,6 +41,8 @@ public:
 
   void parse_add() {
     switch ($input.read<u16>()) {
+    case label(Token::REG, Token::I8):
+      return encode<RegIndex, i8>(&CodeWriter::write_add);
     case label(Token::REG, Token::I32):
       return encode<RegIndex, i32>(&CodeWriter::write_add);
 
@@ -51,6 +53,10 @@ public:
 
   void parse_swap() {
     encode<RegIndex, RegIndex>(&CodeWriter::write_swap);
+  }
+
+  void parse_neg() {
+    $writer->write_neg($input.read<RegIndex>());
   }
 
   Buf compile() {
@@ -69,6 +75,10 @@ public:
 
       case Token::SWAP:
         parse_swap();
+        break;
+
+      case Token::NEG:
+        parse_neg();
         break;
 
       case Token::RETURN:
