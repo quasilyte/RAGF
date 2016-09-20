@@ -6,6 +6,7 @@
 #include <core/arch/x86_64/code_writer.hpp>
 
 #include <core/compile/helpers.hpp>
+#include <core/compile/parsers_macro.hpp>
 
 #include <cstdlib>
 #include <cstdio>
@@ -59,42 +60,23 @@ public:
     $writer->write_neg($input.read<RegIndex>());
   }
 
-  Buf compile() {
-    for (;;) {
-      switch ($input.read_token()) {
-      case Token::END_OF_INPUT:
-        return $writer->get_buf();
-
-      case Token::ASSIGN:
-        parse_assign();
-        break;
-
-      case Token::ADD:
-        parse_add();
-        break;
-
-      case Token::SWAP:
-        parse_swap();
-        break;
-
-      case Token::NEG:
-        parse_neg();
-        break;
-
-      case Token::RETURN:
-        parse_return();
-        break;
-
-      default:
-        throw "unexpected top level token";
-      }
-    }
-  }
+  Buf compile();
 
 private:
   TokenStream $input;
   CodeWriter* $writer;
 };
+
+Buf Compiler::compile() {
+  BEGIN_PARSERS();
+    TERMINATING_PARSER(end_of_input);
+    PARSER(add);
+    PARSER(return);
+    PARSER(assign);
+    PARSER(swap);
+    PARSER(neg);
+  END_PARSERS();
+}
 
 Buf compile_i86_64(const byte* input) {
   try {

@@ -8,9 +8,9 @@ enum class Token: byte {
   END_OF_INPUT,
 
   // Operations
+  ADD,
   RETURN,
   ASSIGN,
-  ADD,
   SWAP,
   NEG,
 
