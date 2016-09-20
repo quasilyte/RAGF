@@ -3,6 +3,7 @@
 #include <core/typedefs.hpp>
 
 enum class Token: byte {
+  //// Top level tokens
   // Special token
   END_OF_INPUT,
 
@@ -13,6 +14,7 @@ enum class Token: byte {
   SWAP,
   NEG,
 
+  //// Context tokens
   // Operand types
   REG,
   MEM,
