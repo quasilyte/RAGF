@@ -2,17 +2,18 @@
 
 #include <core/typedefs.hpp>
 
-constexpr uint label(Token a, Token b) noexcept {
-  return (
-    (static_cast<uint>(a)) +
-    (static_cast<uint>(b) << 8)
-  );
+namespace priv {
+  constexpr uint label(int step, Token x) {
+    return (static_cast<uint>(x) << (step * 8));
+  }
+
+  template<class... ARGS>
+  constexpr uint label(int step, Token x, ARGS... ys) {
+    return label(step, x) + label(step + 1, ys...);
+  }
 }
 
-constexpr uint label(Token a, Token b, Token c) noexcept {
-  return (
-    (static_cast<uint>(a)) +
-    (static_cast<uint>(b) << 8) +
-    (static_cast<uint>(c) << 16)
-  );
+template<class... ARGS>
+constexpr uint label(ARGS... args) {
+  return priv::label(0, args...);
 }
