@@ -7,9 +7,7 @@ class CodeWriter {
 public:
   CodeWriter();
 
-  virtual CodeWriter* clone() const = 0;
-
-  CodeBuf&& swap_code_buf(CodeBuf&&) noexcept;
+  void set_code_buf(CodeBuf*) noexcept;
 
   Buf get_buf() const noexcept;
 
@@ -27,5 +25,5 @@ public:
   virtual void write_while_neq(i32 offset, RegIndex, i8);
 
 protected:
-  CodeBuf $output;
+  CodeBuf* $output;
 };

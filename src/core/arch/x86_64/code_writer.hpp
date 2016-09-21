@@ -8,8 +8,6 @@ namespace x86_64 {
 
 class x86_64::CodeWriter: public ::CodeWriter {
 public:
-  CodeWriter* clone() const;
-
   void write_return() override;
   void write_swap(RegIndex, RegIndex) override;
   void write_neg(RegIndex) override;

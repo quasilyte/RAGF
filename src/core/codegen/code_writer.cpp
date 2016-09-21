@@ -2,18 +2,16 @@
 
 CodeWriter::CodeWriter() {}
 
-CodeBuf&& CodeWriter::swap_code_buf(CodeBuf&& new_buf) noexcept {
-  CodeBuf&& old_buf = std::move($output);
-  $output = new_buf;
-  return std::move(old_buf);
+void CodeWriter::set_code_buf(CodeBuf* code_buf) noexcept {
+  $output = code_buf;
 }
 
 Buf CodeWriter::get_buf() const noexcept {
-  return $output.get_buf();
+  return $output->get_buf();
 }
 
 void CodeWriter::write_block(Buf block) noexcept {
-  $output.write_bytes(block.data, block.size);
+  $output->write_bytes(block.data, block.size);
 }
 
 #define MOCK(NAME_WITH_ARGS) \

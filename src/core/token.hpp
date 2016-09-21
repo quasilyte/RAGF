@@ -15,10 +15,12 @@ enum class Token: byte {
   SWAP,
   NEG,
   LOOP,
-  WHILE,
 
   //// Context tokens
   NIL,
+
+  // Loop types
+  WHILE,
 
   // Operand types
   REG,

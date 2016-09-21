@@ -5,17 +5,35 @@
 #include <core/codegen/code_writer.hpp>
 #include <core/arch/x86_64/code_writer.hpp>
 
+#include <core/compile/constants.hpp>
+#include <core/compile/resource_manager.hpp>
 #include <core/compile/helpers.hpp>
 #include <core/compile/parsers_macro.hpp>
 
-#include <cstdlib>
 #include <cstdio>
 
 class Compiler {
 public:
-  Compiler(TokenStream& tokens, CodeWriter* writer):
+  ~Compiler() {
+    $resources.reset_code_buf($depth);
+  }
+
+  Compiler(
+    int depth,
+    ResourceManager& resources,
+    TokenStream& tokens,
+    CodeWriter* writer
+  ):
+  $depth{depth},
+  $resources{resources},
   $input{tokens},
-  $writer{writer} {}
+  $writer{writer} {
+    if (depth > MAX_DEPTH) {
+      throw "max parse depth exceeded";
+    }
+
+    $writer->set_code_buf($resources.get_code_buf($depth));
+  }
 
   void parse_return() {
     $writer->write_return();
@@ -75,38 +93,47 @@ public:
 
     $writer->write_loop(block.size);
     $writer->write_block(block);
-    $offsets.push_back(block.size);
+
+    switch ($input.read<Token>()) {
+    case Token::WHILE:
+      return parse_while(block.size);
+
+    default:
+      throw "loop: invalid type token";
+    }
   }
 
-  void parse_while() {
-
+  void parse_while(i32 offset) {
     switch ($input.read<u32>()) {
     case label(Token::NEQ, Token::REG, Token::I8, Token::NIL): {
       RegIndex a = $input.read<RegIndex>();
       i8 b = $input.read<i8>();
-      i32 offset = $offsets.back();
-      $offsets.pop_back();
       return $writer->write_while_neq(offset, a, b);
     }
 
     default:
       throw "while: invalid token combination";
     }
-//    const byte* block = blocks.back();
-//    blocks.pop_back();
   }
 
   Buf compile();
 
 private:
-  std::vector<i32> $offsets;
+  int $depth;
+  ResourceManager& $resources;
   TokenStream& $input;
   CodeWriter* $writer;
 
   Buf compile_block() {
-    auto writer_clone = $writer->clone();
-    Compiler compiler{$input, writer_clone};
-    return compiler.compile();
+    Compiler compiler{$depth + 1, $resources, $input, $writer};
+    auto block = compiler.compile();
+    $writer->set_code_buf($resources.get_code_buf($depth));
+
+    return block;
+  }
+
+  Buf get_result() {
+    return $writer->get_buf();
   }
 };
 
@@ -120,17 +147,15 @@ Buf Compiler::compile() {
     PARSER(swap);
     PARSER(neg);
     PARSER(loop);
-    PARSER(while);
   END_PARSERS;
 }
 
 Buf compile_i86_64(const byte* input) {
-  try {
-    TokenStream tokens{input};
-    Compiler compiler{tokens, new x86_64::CodeWriter{}};
-    return compiler.compile();
-  } catch (const char* err) {
-    fprintf(stderr, "error: %s\n", err);
-    exit(1);
-  }
+  TokenStream tokens{input};
+  ResourceManager resources;
+  x86_64::CodeWriter writer;
+
+  Compiler compiler{0, resources, tokens, &writer};
+
+  return compiler.compile();
 }

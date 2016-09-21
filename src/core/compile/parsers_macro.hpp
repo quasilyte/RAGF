@@ -20,7 +20,7 @@
   } \
   parsers__[i__++] = &&NAME; \
   goto after_##NAME; \
-  end_of_input: return $writer->get_buf(); \
+  end_of_input: return get_result(); \
   after_##NAME:
 
 // Declare regular parser which handles Nth token
