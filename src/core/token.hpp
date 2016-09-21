@@ -15,6 +15,8 @@ enum class Token: byte {
   NEG,
 
   //// Context tokens
+  NIL,
+
   // Operand types
   REG,
   MEM,
@@ -24,4 +26,16 @@ enum class Token: byte {
   U64,
   U32,
   U8,
+
+  // Loops
+  WHILE,
+  END_WHILE,
+
+  // Relation (binary) conditions
+  EQ,
+  NEQ,
+  LT,
+  LTE,
+  GT,
+  GTE,
 };

@@ -6,7 +6,7 @@
 
 // Open parser declaration block
 #define BEGIN_PARSERS \
-  static const int count__ = static_cast<int>(Token::REG); \
+  static const int count__ = static_cast<int>(Token::NIL); \
   static bool initialized__ = false; \
   static void* parsers__[count__]; \
   int i__ = 0
