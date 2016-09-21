@@ -48,6 +48,14 @@ void CodeWriter::write_neg(RegIndex r) {
   });
 }
 
+void CodeWriter::write_assign(RegIndex dst, RegIndex src) {
+  $output->write(BinaryValue<8>{
+    REX_WRB,
+    opcode(0x89),
+    mod_reg_rm(Mod::REG, src, dst)
+  });
+}
+
 void CodeWriter::write_assign(RegIndex idx, i32 val) {
   $output->write(BinaryValue<8>{
     REX_WB,

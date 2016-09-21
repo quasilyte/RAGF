@@ -11,6 +11,7 @@ public:
   void write_return() override;
   void write_swap(RegIndex, RegIndex) override;
   void write_neg(RegIndex) override;
+  void write_assign(RegIndex dst, RegIndex src) override;
   void write_assign(RegIndex, i32) override;
   void write_assign(RegIndex, i64) override;
   void write_add(RegIndex, i32) override;

@@ -22,6 +22,7 @@ void CodeWriter::write_block(Buf block) noexcept {
 MOCK(write_return())
 MOCK(write_swap(RegIndex, RegIndex))
 MOCK(write_neg(RegIndex))
+MOCK(write_assign(RegIndex, RegIndex))
 MOCK(write_assign(RegIndex, i32))
 MOCK(write_assign(RegIndex, i64))
 MOCK(write_add(RegIndex, i32))

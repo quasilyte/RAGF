@@ -48,6 +48,8 @@ public:
 
   void parse_assign() {
     switch ($input.read<u16>()) {
+    case label(Token::REG, Token::REG):
+      return encode<RegIndex, RegIndex>(&CodeWriter::write_assign);
     case label(Token::REG, Token::I32):
       return encode<RegIndex, i32>(&CodeWriter::write_assign);
     case label(Token::REG, Token::I64):
