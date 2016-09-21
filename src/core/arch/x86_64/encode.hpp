@@ -19,3 +19,7 @@ constexpr byte opcode(uint val, RegIndex index = 0) noexcept {
   return val + index;
 }
 
+constexpr u16 opcode(uint b1, uint b2) noexcept {
+  return b1 + (b2 << 8);
+}
+
