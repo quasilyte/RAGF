@@ -5,14 +5,17 @@
 enum class Token: byte {
   //// Top level tokens
   // Special token
-  END_OF_INPUT,
+  END,
 
   // Operations
-  ADD,
   RETURN,
+  ADD,
+  SUB,
   ASSIGN,
   SWAP,
   NEG,
+  LOOP,
+  WHILE,
 
   //// Context tokens
   NIL,
@@ -26,10 +29,6 @@ enum class Token: byte {
   U64,
   U32,
   U8,
-
-  // Loops
-  WHILE,
-  END_WHILE,
 
   // Relation (binary) conditions
   EQ,

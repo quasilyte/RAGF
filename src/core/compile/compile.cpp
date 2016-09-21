@@ -13,8 +13,8 @@
 
 class Compiler {
 public:
-  Compiler(const byte* input, CodeWriter* writer):
-  $input{input},
+  Compiler(TokenStream& tokens, CodeWriter* writer):
+  $input{tokens},
   $writer{writer} {}
 
   void parse_return() {
@@ -52,6 +52,16 @@ public:
     }
   }
 
+  void parse_sub() {
+    switch ($input.read<u16>()) {
+    case label(Token::REG, Token::I8):
+      return encode<RegIndex, i8>(&CodeWriter::write_sub);
+
+    default:
+      throw "sub: invalid dst/src token";
+    }
+  }
+
   void parse_swap() {
     encode<RegIndex, RegIndex>(&CodeWriter::write_swap);
   }
@@ -60,27 +70,64 @@ public:
     $writer->write_neg($input.read<RegIndex>());
   }
 
+  void parse_loop() {
+    auto block = compile_block();
+
+    $writer->write_loop(block.size);
+    $writer->write_block(block);
+    $offsets.push_back(block.size);
+  }
+
+  void parse_while() {
+
+    switch ($input.read<u32>()) {
+    case label(Token::NEQ, Token::REG, Token::I8, Token::NIL): {
+      RegIndex a = $input.read<RegIndex>();
+      i8 b = $input.read<i8>();
+      i32 offset = $offsets.back();
+      $offsets.pop_back();
+      return $writer->write_while_neq(offset, a, b);
+    }
+
+    default:
+      throw "while: invalid token combination";
+    }
+//    const byte* block = blocks.back();
+//    blocks.pop_back();
+  }
+
   Buf compile();
 
 private:
-  TokenStream $input;
+  std::vector<i32> $offsets;
+  TokenStream& $input;
   CodeWriter* $writer;
+
+  Buf compile_block() {
+    auto writer_clone = $writer->clone();
+    Compiler compiler{$input, writer_clone};
+    return compiler.compile();
+  }
 };
 
 Buf Compiler::compile() {
   BEGIN_PARSERS;
     TERMINATING_PARSER(end_of_input);
-    PARSER(add);
     PARSER(return);
+    PARSER(add);
+    PARSER(sub);
     PARSER(assign);
     PARSER(swap);
     PARSER(neg);
+    PARSER(loop);
+    PARSER(while);
   END_PARSERS;
 }
 
 Buf compile_i86_64(const byte* input) {
   try {
-    Compiler compiler{input, new x86_64::CodeWriter{}};
+    TokenStream tokens{input};
+    Compiler compiler{tokens, new x86_64::CodeWriter{}};
     return compiler.compile();
   } catch (const char* err) {
     fprintf(stderr, "error: %s\n", err);
