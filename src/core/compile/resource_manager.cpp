@@ -15,7 +15,7 @@ CodeBuf* ResourceManager::get_code_buf(int idx) noexcept {
   return $code_bufs + idx;
 }
 
-void ResourceManager::reset_code_buf(int idx) {
+void ResourceManager::dispose(int idx) {
   $code_bufs[idx].set_len(0);
 }
 

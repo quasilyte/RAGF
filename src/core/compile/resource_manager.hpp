@@ -8,7 +8,8 @@ public:
   ResourceManager();
 
   CodeBuf* get_code_buf(int idx) noexcept;
-  void reset_code_buf(int idx);
+
+  void dispose(int idx);
 
 private:
   CodeBuf $code_bufs[MAX_DEPTH];

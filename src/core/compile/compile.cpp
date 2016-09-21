@@ -15,7 +15,7 @@
 class Compiler {
 public:
   ~Compiler() {
-    $resources.reset_code_buf($depth);
+    $resources.dispose($depth);
   }
 
   Compiler(
