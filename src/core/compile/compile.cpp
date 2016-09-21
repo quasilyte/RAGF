@@ -68,14 +68,14 @@ private:
 };
 
 Buf Compiler::compile() {
-  BEGIN_PARSERS();
+  BEGIN_PARSERS;
     TERMINATING_PARSER(end_of_input);
     PARSER(add);
     PARSER(return);
     PARSER(assign);
     PARSER(swap);
     PARSER(neg);
-  END_PARSERS();
+  END_PARSERS;
 }
 
 Buf compile_i86_64(const byte* input) {

@@ -6,3 +6,4 @@ data
 local
 output
 *.o
+CMakeLists.txt.user
