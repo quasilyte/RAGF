@@ -3,17 +3,17 @@
 #include <core/typedefs.hpp>
 
 namespace priv {
-  constexpr uint label(int step, Token x) {
-    return (static_cast<uint>(x) << (step * 8));
+  constexpr uint label(int step, Token t) {
+    return (static_cast<uint>(t) << (step * 8));
   }
 
   template<class... ARGS>
-  constexpr uint label(int step, Token x, ARGS... ys) {
-    return label(step, x) + label(step + 1, ys...);
+  constexpr uint label(int step, Token head, ARGS... tail) {
+    return label(step, head) + label(step + 1, tail...);
   }
 }
 
 template<class... ARGS>
-constexpr uint label(ARGS... args) {
-  return priv::label(0, args...);
+constexpr uint label(ARGS... tokens) {
+  return priv::label(0, tokens...);
 }
