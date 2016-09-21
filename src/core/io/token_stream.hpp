@@ -8,12 +8,9 @@ class TokenStream {
 public:
   TokenStream(const byte* input);
 
-  template<class T>
-  T read() noexcept;
+  template<class T> T read();
 
   byte read_byte() noexcept;
-  Token read_token() noexcept;
-  RegIndex read_reg_index();
   const byte* read_bytes(int count) noexcept;
 
 private:

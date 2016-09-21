@@ -2,7 +2,7 @@
 
 // Read next token and execute associated parser
 #define PARSE_NEXT \
-  goto *parsers__[static_cast<int>($input.read_token())]
+  goto *parsers__[static_cast<int>($input.read<Token>())]
 
 // Open parser declaration block
 #define BEGIN_PARSERS \
