@@ -8,6 +8,8 @@ namespace x86_64 {
 
 class x86_64::CodeWriter: public ::CodeWriter {
 public:
+  using ::CodeWriter::CodeWriter;
+
   void write_return() override;
   void write_swap(RegIndex, RegIndex) override;
   void write_neg(RegIndex) override;
@@ -17,6 +19,6 @@ public:
   void write_add(RegIndex, i32) override;
   void write_add(RegIndex, i8) override;
   void write_sub(RegIndex, i8) override;
-  void write_loop(i32 offset) override;
-  void write_while_neq(i32 offset, RegIndex, i8) override;
+//  void write_loop(i32 offset) override;
+//  void write_while_neq(i32 offset, RegIndex, i8) override;
 };

@@ -3,11 +3,13 @@
 #include <core/io/code_buf.hpp>
 #include <core/reg_index.hpp>
 
+class Compiler;
+
 class CodeWriter {
 public:
-  CodeWriter();
+  CodeWriter(CodeBuf);
 
-  void set_code_buf(CodeBuf*) noexcept;
+  void set_compiler(Compiler*);
 
   Buf get_buf() const noexcept;
 
@@ -22,9 +24,13 @@ public:
   virtual void write_add(RegIndex, i32);
   virtual void write_add(RegIndex, i8);
   virtual void write_sub(RegIndex, i8);
-  virtual void write_loop(i32 offset);
-  virtual void write_while_neq(i32 offset, RegIndex, i8);
+
+//  virtual void write_while_neq(RegIndex, i8);
+
+//  virtual void write_loop(i32 offset);
+//  virtual void write_while_neq(i32 offset, RegIndex, i8);
 
 protected:
-  CodeBuf* $output;
+  Compiler* $compiler;
+  CodeBuf $output;
 };

@@ -3,22 +3,18 @@
 #include <cstdlib>
 #include <cstdio>
 
-CodeBuf::CodeBuf(): $len{0}, $cap{0} {}
-
-void CodeBuf::set_buf(Buf buf) noexcept {
-  $data = buf.data;
-  $cap = buf.size;
-}
+CodeBuf::CodeBuf(Buf buf):
+$data{buf.data}, $len{0}, $cap{buf.size} {}
 
 Buf CodeBuf::get_buf() const noexcept {
   return Buf{$data, $len};
 }
 
-void CodeBuf::set_len(int len) noexcept {
+void CodeBuf::set_len(i64 len) noexcept {
   $len = len;
 }
 
-int CodeBuf::get_len() const noexcept {
+i64 CodeBuf::get_len() const noexcept {
   return $len;
 }
 

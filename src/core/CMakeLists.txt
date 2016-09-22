@@ -6,7 +6,6 @@ set(
   io/code_buf.cpp
   codegen/code_writer.cpp
   compile/compile.cpp
-  compile/resource_manager.cpp
   arch/x86_64/code_writer.cpp
 )
 

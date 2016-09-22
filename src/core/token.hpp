@@ -14,13 +14,13 @@ enum class Token: byte {
   ASSIGN,
   SWAP,
   NEG,
-  LOOP,
+//  LOOP,
 
   //// Context tokens
   NIL,
 
   // Loop types
-  WHILE,
+//  WHILE,
 
   // Operand types
   REG,

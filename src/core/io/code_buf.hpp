@@ -5,13 +5,12 @@
 
 class CodeBuf {
 public:
-  CodeBuf();
+  CodeBuf(Buf);
 
-  void set_buf(Buf) noexcept;
   Buf get_buf() const noexcept;
 
-  void set_len(int) noexcept;
-  int get_len() const noexcept;
+  void set_len(i64) noexcept;
+  i64 get_len() const noexcept;
 
   void write_byte(byte) noexcept;
   void write_bytes(const byte* bytes, int count) noexcept;
@@ -24,8 +23,8 @@ public:
 
 private:
   byte* $data;
-  int $len;
-  int $cap;
+  i64 $len;
+  i64 $cap;
 
   void grow();
 };

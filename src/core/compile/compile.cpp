@@ -6,33 +6,19 @@
 #include <core/arch/x86_64/code_writer.hpp>
 
 #include <core/compile/constants.hpp>
-#include <core/compile/resource_manager.hpp>
 #include <core/compile/helpers.hpp>
 #include <core/compile/parsers_macro.hpp>
 
+#include <cstdlib>
 #include <cstdio>
 
 class Compiler {
 public:
-  ~Compiler() {
-    $resources.dispose($depth);
-  }
+  Compiler(TokenStream& tokens):
+  $input{tokens} {}
 
-  Compiler(
-    int depth,
-    ResourceManager& resources,
-    TokenStream& tokens,
-    CodeWriter* writer
-  ):
-  $depth{depth},
-  $resources{resources},
-  $input{tokens},
-  $writer{writer} {
-    if (depth > MAX_DEPTH) {
-      throw "max parse depth exceeded";
-    }
-
-    $writer->set_code_buf($resources.get_code_buf($depth));
+  void set_writer(CodeWriter* writer) {
+    $writer = writer;
   }
 
   void parse_return() {
@@ -90,49 +76,46 @@ public:
     $writer->write_neg($input.read<RegIndex>());
   }
 
-  void parse_loop() {
-    auto block = compile_block();
+//  void parse_loop() {
+//    auto block = compile_block();
 
-    $writer->write_loop(block.size);
-    $writer->write_block(block);
+//    $writer->write_loop(block.size);
+//    $writer->write_block(block);
 
-    switch ($input.read<Token>()) {
-    case Token::WHILE:
-      return parse_while(block.size);
+//    switch ($input.read<Token>()) {
+//    case Token::WHILE:
+//      return parse_while(block.size);
 
-    default:
-      throw "loop: invalid type token";
-    }
-  }
+//    default:
+//      throw "loop: invalid type token";
+//    }
+//  }
 
-  void parse_while(i32 offset) {
-    switch ($input.read<u32>()) {
-    case label(Token::NEQ, Token::REG, Token::I8, Token::NIL): {
-      RegIndex a = $input.read<RegIndex>();
-      i8 b = $input.read<i8>();
-      return $writer->write_while_neq(offset, a, b);
-    }
+//  void parse_while(i32 offset) {
+//    switch ($input.read<u32>()) {
+//    case label(Token::NEQ, Token::REG, Token::I8, Token::NIL): {
+//      RegIndex a = $input.read<RegIndex>();
+//      i8 b = $input.read<i8>();
+//      return $writer->write_while_neq(offset, a, b);
+//    }
 
-    default:
-      throw "while: invalid token combination";
-    }
-  }
+//    default:
+//      throw "while: invalid token combination";
+//    }
+//  }
 
   Buf compile();
 
 private:
-  int $depth;
-  ResourceManager& $resources;
   TokenStream& $input;
   CodeWriter* $writer;
 
-  Buf compile_block() {
-    Compiler compiler{$depth + 1, $resources, $input, $writer};
-    auto block = compiler.compile();
-    $writer->set_code_buf($resources.get_code_buf($depth));
+//  Buf compile_block() {
+//    Compiler compiler{$depth + 1, $input, $writer};
+//    auto block = compiler.compile();
 
-    return block;
-  }
+//    return block;
+//  }
 
   Buf get_result() {
     return $writer->get_buf();
@@ -148,16 +131,18 @@ Buf Compiler::compile() {
     PARSER(assign);
     PARSER(swap);
     PARSER(neg);
-    PARSER(loop);
   END_PARSERS;
 }
 
 Buf compile_i86_64(const byte* input) {
   TokenStream tokens{input};
-  ResourceManager resources;
-  x86_64::CodeWriter writer;
 
-  Compiler compiler{0, resources, tokens, &writer};
+  CodeBuf output{Buf{static_cast<byte*>(calloc(64, 1)), 64}};
+  x86_64::CodeWriter writer{output};
+  Compiler compiler{tokens};
+
+  writer.set_compiler(&compiler);
+  compiler.set_writer(&writer);
 
   return compiler.compile();
 }
