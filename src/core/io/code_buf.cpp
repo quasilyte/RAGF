@@ -3,6 +3,9 @@
 #include <cstdlib>
 #include <cstdio>
 
+CodeBuf::CodeBuf(byte* data, i64 len, i64 cap):
+$data{data}, $len{len}, $cap{cap} {}
+
 CodeBuf::CodeBuf(Buf buf):
 $data{buf.data}, $len{0}, $cap{buf.size} {}
 
@@ -10,8 +13,13 @@ Buf CodeBuf::get_buf() const noexcept {
   return Buf{$data, $len};
 }
 
-void CodeBuf::set_len(i64 len) noexcept {
-  $len = len;
+CodeBufSlice CodeBuf::preserve(int count) {
+  if ($len + count >= $cap) {
+    grow();
+  }
+  int offset = $len;
+  $len += count;
+  return CodeBufSlice{this, count, offset};
 }
 
 i64 CodeBuf::get_len() const noexcept {
@@ -19,7 +27,7 @@ i64 CodeBuf::get_len() const noexcept {
 }
 
 void CodeBuf::write_byte(byte val) noexcept {
-  if ($len + 1 > $cap) {
+  if ($len + 1 >= $cap) {
     grow();
   }
   $data[$len] = val;

@@ -2,14 +2,17 @@
 
 #include <core/typedefs.hpp>
 #include <core/io/binary_value.hpp>
+#include <core/io/code_buf_slice.hpp>
 
 class CodeBuf {
 public:
+  CodeBuf(byte* data, i64 len, i64 cap);
   CodeBuf(Buf);
 
   Buf get_buf() const noexcept;
 
-  void set_len(i64) noexcept;
+  CodeBufSlice preserve(int count);
+
   i64 get_len() const noexcept;
 
   void write_byte(byte) noexcept;
@@ -27,4 +30,6 @@ private:
   i64 $cap;
 
   void grow();
+
+  friend class CodeBufSlice;
 };
