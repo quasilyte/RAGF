@@ -1,5 +1,7 @@
 #include <core/codegen/code_writer.hpp>
 
+#include <core/compile/compiler.hpp>
+
 CodeWriter::CodeWriter(CodeBuf code_buf):
 $output{code_buf} {}
 
@@ -11,8 +13,12 @@ Buf CodeWriter::get_buf() const noexcept {
   return $output.get_buf();
 }
 
-void CodeWriter::write_block(Buf block) noexcept {
-  $output.write_bytes(block.data, block.size);
+int CodeWriter::write_block() noexcept {
+  int before = $output.get_len();
+  $compiler->compile();
+  int after = $output.get_len();
+
+  return after - before;
 }
 
 #define MOCK(NAME_WITH_ARGS) \
@@ -29,5 +35,6 @@ MOCK(write_assign(RegIndex, i64))
 MOCK(write_add(RegIndex, i32))
 MOCK(write_add(RegIndex, i8))
 MOCK(write_sub(RegIndex, i8))
+MOCK(write_while_neq(RegIndex, i8))
 //MOCK(write_loop(i32))
-//MOCK(write_while_neq(i32, RegIndex, i8))
+

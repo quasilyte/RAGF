@@ -2,6 +2,11 @@
 
 #include <core/arch/x86_64/constants.hpp>
 #include <core/arch/x86_64/encode.hpp>
+#include <core/compile/compiler.hpp>
+
+static const int JMP_SIZE = 5;
+static const int JNE_SIZE = 6;
+static const int CMP_SIZE = 4;
 
 int write_jne(CodeBuf& output, i32 offset) {
   return output.write(BinaryValue<8>{
@@ -10,7 +15,7 @@ int write_jne(CodeBuf& output, i32 offset) {
   });
 }
 
-int write_jmp(CodeBuf& output,  i32 offset) {
+int write_jmp(CodeBuf output,  i32 offset) {
   return output.write(BinaryValue<8>{
     opcode(0xE9),
     offset
@@ -98,14 +103,10 @@ void CodeWriter::write_sub(RegIndex idx, i8 val) {
   });
 }
 
-//void CodeWriter::write_loop(i32 offset) {
-//  write_jmp($output, offset);
-//}
-
-//void CodeWriter::write_while_neq(i32 offset, RegIndex a, i8 b) {
-//  const int jmp_size = 6;
-
-//  int cmp_size = write_cmp($output, a, b);
-//  int encoded_size = cmp_size + jmp_size;
-//  write_jne($output, -(offset + encoded_size));
-//}
+void CodeWriter::write_while_neq(RegIndex a, i8 b) {
+  auto jmp_block = $output.preserve(JMP_SIZE);
+  int body_size = write_block();
+  write_jmp(jmp_block, body_size);
+  write_cmp($output, a, b);
+  write_jne($output, -(body_size + JNE_SIZE + CMP_SIZE));
+}

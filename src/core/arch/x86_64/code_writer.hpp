@@ -19,6 +19,5 @@ public:
   void write_add(RegIndex, i32) override;
   void write_add(RegIndex, i8) override;
   void write_sub(RegIndex, i8) override;
-//  void write_loop(i32 offset) override;
-//  void write_while_neq(i32 offset, RegIndex, i8) override;
+  void write_while_neq(RegIndex, i8) override;
 };

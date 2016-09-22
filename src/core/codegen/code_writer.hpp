@@ -13,7 +13,7 @@ public:
 
   Buf get_buf() const noexcept;
 
-  void write_block(Buf) noexcept;
+  int write_block() noexcept;
 
   virtual void write_return();
   virtual void write_swap(RegIndex, RegIndex);
@@ -25,7 +25,7 @@ public:
   virtual void write_add(RegIndex, i8);
   virtual void write_sub(RegIndex, i8);
 
-//  virtual void write_while_neq(RegIndex, i8);
+  virtual void write_while_neq(RegIndex, i8);
 
 //  virtual void write_loop(i32 offset);
 //  virtual void write_while_neq(i32 offset, RegIndex, i8);
