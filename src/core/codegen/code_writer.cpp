@@ -23,7 +23,7 @@ int CodeWriter::write_block() noexcept {
 
 #define MOCK(NAME_WITH_ARGS) \
   void CodeWriter::NAME_WITH_ARGS { \
-    throw #NAME_WITH_ARGS ": unimplemented"; \
+    throw #NAME_WITH_ARGS " is unimplemented"; \
   }
 
 MOCK(write_return())
@@ -36,5 +36,5 @@ MOCK(write_add(RegIndex, i32))
 MOCK(write_add(RegIndex, i8))
 MOCK(write_sub(RegIndex, i8))
 MOCK(write_while_neq(RegIndex, i8))
-//MOCK(write_loop(i32))
-
+MOCK(write_if_eq(RegIndex, i8))
+MOCK(write_if_else_eq(RegIndex, i8))

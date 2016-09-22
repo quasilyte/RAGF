@@ -1,112 +1,71 @@
 #include <core/arch/x86_64/code_writer.hpp>
 
-#include <core/arch/x86_64/constants.hpp>
-#include <core/arch/x86_64/encode.hpp>
+#include <core/arch/x86_64/ops.hpp>
 #include <core/compile/compiler.hpp>
-
-static const int JMP_SIZE = 5;
-static const int JNE_SIZE = 6;
-static const int CMP_SIZE = 4;
-
-int write_jne(CodeBuf& output, i32 offset) {
-  return output.write(BinaryValue<8>{
-    opcode(0x0F, 0x85),
-    offset
-  });
-}
-
-int write_jmp(CodeBuf output,  i32 offset) {
-  return output.write(BinaryValue<8>{
-    opcode(0xE9),
-    offset
-  });
-}
-
-int write_cmp(CodeBuf& output, RegIndex a, i8 b) {
-  return output.write(BinaryValue<4>{
-    REX_WB,
-    opcode(0x83),
-    mod_reg_rm(Mod::REG, 7, a),
-    b
-  });
-}
 
 #define CodeWriter x86_64::CodeWriter
 
 void CodeWriter::write_return() {
-  $output.write_byte(0xC3);
+  Ret::write(&$output);
 }
 
 void CodeWriter::write_swap(RegIndex a, RegIndex b) {
-  $output.write(BinaryValue<4>{
-    REX_WRB,
-    opcode(0x87),
-    mod_reg_rm(Mod::REG, a, b)
-  });
+  Xchg::write(&$output, a, b);
 }
 
 void CodeWriter::write_neg(RegIndex r) {
-  $output.write(BinaryValue<8>{
-    REX_WB,
-    opcode(0xF7),
-    mod_reg_rm(Mod::REG, 3, r)
-  });
+  Neg::write(&$output, r);
 }
 
 void CodeWriter::write_assign(RegIndex dst, RegIndex src) {
-  $output.write(BinaryValue<8>{
-    REX_WRB,
-    opcode(0x89),
-    mod_reg_rm(Mod::REG, src, dst)
-  });
+  Mov::write(&$output, dst, src);
 }
 
-void CodeWriter::write_assign(RegIndex idx, i32 val) {
-  $output.write(BinaryValue<8>{
-    REX_WB,
-    opcode(0xC7),
-    mod_reg_rm(Mod::REG, 0, idx),
-    val
-  });
+void CodeWriter::write_assign(RegIndex dst, i32 src) {
+  Mov::write(&$output, dst, src);
 }
 
-void CodeWriter::write_assign(RegIndex idx, i64 val) {
-  $output.write(BinaryValue<16>{
-    REX_WB, opcode(0xB8, idx), val
-  });
+void CodeWriter::write_assign(RegIndex dst, i64 src) {
+  Mov::write(&$output, dst, src);
 }
 
-void CodeWriter::write_add(RegIndex idx, i32 val) {
-  $output.write(BinaryValue<8>{
-    REX_WB,
-    opcode(0x81),
-    mod_reg_rm(Mod::REG, 0, idx),
-    val
-  });
+void CodeWriter::write_add(RegIndex dst, i32 src) {
+  Add::write(&$output, dst, src);
 }
 
-void CodeWriter::write_add(RegIndex idx, i8 val) {
-  $output.write(BinaryValue<8>{
-    REX_WB,
-    opcode(0x83),
-    mod_reg_rm(Mod::REG, 0, idx),
-    val
-  });
+void CodeWriter::write_add(RegIndex dst, i8 src) {
+  Add::write(&$output, dst, src);
 }
 
-void CodeWriter::write_sub(RegIndex idx, i8 val) {
-  $output.write(BinaryValue<8>{
-    REX_WB,
-    opcode(0x83),
-    mod_reg_rm(Mod::REG, 5, idx),
-    val
-  });
+void CodeWriter::write_sub(RegIndex dst, i8 src) {
+  Sub::write(&$output, dst, src);
 }
 
 void CodeWriter::write_while_neq(RegIndex a, i8 b) {
-  auto jmp_block = $output.preserve(JMP_SIZE);
+  auto jmp_block = $output.preserve(Jmp::size(i32{}));
   int body_size = write_block();
-  write_jmp(jmp_block, body_size);
-  write_cmp($output, a, b);
-  write_jne($output, -(body_size + JNE_SIZE + CMP_SIZE));
+  Jmp::write(jmp_block, body_size);
+
+  Cmp::write(&$output, a, b);
+  Jne::write(&$output, -(body_size + Jne::size(i32{}) + Cmp::size(a, b)));
+}
+
+void CodeWriter::write_if_eq(RegIndex a, i8 b) {
+  Cmp::write(&$output, a, b);
+
+  auto jne_block = $output.preserve(Jne::size(i32{}));
+  int on_true_size = write_block();
+  Jne::write(jne_block, on_true_size);
+}
+
+void CodeWriter::write_if_else_eq(RegIndex a, i8 b) {
+  Cmp::write(&$output, a, b);
+
+  auto jne_block = $output.preserve(Jne::size(i32{}));
+  int on_true_size = write_block();
+  Jne::write(jne_block, on_true_size + Jmp::size(i32{}));
+
+  auto jmp_block = $output.preserve(Jmp::size(i32{}));
+  int on_false_size = write_block();
+  Jmp::write(jmp_block, on_false_size);
 }

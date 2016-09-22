@@ -9,6 +9,7 @@ set(
   compile/compiler.cpp
   compile/compile.cpp
   arch/x86_64/code_writer.cpp
+  arch/x86_64/ops.cpp
 )
 
 add_library(ragf_core STATIC ${ragf_core_src})

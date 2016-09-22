@@ -11,9 +11,9 @@ public:
 
   void set_compiler(Compiler*);
 
-  Buf get_buf() const noexcept;
-
   int write_block() noexcept;
+
+  Buf get_buf() const noexcept;
 
   virtual void write_return();
   virtual void write_swap(RegIndex, RegIndex);
@@ -26,9 +26,8 @@ public:
   virtual void write_sub(RegIndex, i8);
 
   virtual void write_while_neq(RegIndex, i8);
-
-//  virtual void write_loop(i32 offset);
-//  virtual void write_while_neq(i32 offset, RegIndex, i8);
+  virtual void write_if_eq(RegIndex, i8);
+  virtual void write_if_else_eq(RegIndex, i8);
 
 protected:
   Compiler* $compiler;

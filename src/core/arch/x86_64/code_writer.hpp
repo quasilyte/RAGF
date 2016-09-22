@@ -20,4 +20,6 @@ public:
   void write_add(RegIndex, i8) override;
   void write_sub(RegIndex, i8) override;
   void write_while_neq(RegIndex, i8) override;
+  void write_if_eq(RegIndex, i8) override;
+  void write_if_else_eq(RegIndex, i8) override;
 };

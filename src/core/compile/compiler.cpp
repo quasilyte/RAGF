@@ -69,6 +69,26 @@ void Compiler::parse_while() {
   }
 }
 
+void Compiler::parse_if() {
+  switch ($input.read<u32>()) {
+  case label(Token::EQ, Token::REG, Token::I8, Token::NIL):
+    return encode<RegIndex, i8>(&CodeWriter::write_if_eq);
+
+  default:
+    throw "if: invalid header tokens";
+  }
+}
+
+void Compiler::parse_if_else() {
+  switch ($input.read<u32>()) {
+  case label(Token::EQ, Token::REG, Token::I8, Token::NIL):
+    return encode<RegIndex, i8>(&CodeWriter::write_if_else_eq);
+
+  default:
+    throw "if/else: invalid header tokens";
+  }
+}
+
 Buf Compiler::compile() {
   BEGIN_PARSERS;
     TERMINATING_PARSER(end_of_input);
@@ -79,6 +99,8 @@ Buf Compiler::compile() {
     PARSER(swap);
     PARSER(neg);
     PARSER(while);
+    PARSER(if);
+    PARSER(if_else);
   END_PARSERS;
 }
 

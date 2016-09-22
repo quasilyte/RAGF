@@ -24,6 +24,8 @@ private:
   void parse_swap();
   void parse_neg();
   void parse_while();
+  void parse_if();
+  void parse_if_else();
 
   template<class A, class B>
   void encode(void(CodeWriter::*method)(A, B)) {

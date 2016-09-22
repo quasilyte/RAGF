@@ -6,7 +6,7 @@ class CodeBufSlice {
 public:
   CodeBufSlice(CodeBuf*, int size, int offset);
 
-  operator CodeBuf() const noexcept;
+  operator CodeBuf*() const noexcept;
 
 private:
   CodeBuf* $origin;

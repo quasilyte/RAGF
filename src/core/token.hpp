@@ -15,6 +15,8 @@ enum class Token: byte {
   SWAP,
   NEG,
   WHILE,
+  IF,
+  IF_ELSE,
 
   //// Context tokens
   NIL,
