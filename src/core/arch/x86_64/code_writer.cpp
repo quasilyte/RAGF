@@ -23,11 +23,13 @@ void CodeWriter::write_assign(Reg dst, Reg src) {
 }
 
 void CodeWriter::write_assign(Reg dst, i32 src) {
-  Mov::write(&$output, dst, src);
+  if (src == 0) Xor::write(&$output, dst, dst);
+  else          Mov::write(&$output, dst, src);
 }
 
 void CodeWriter::write_assign(Reg dst, i64 src) {
-  Mov::write(&$output, dst, src);
+  if (src == 0) Xor::write(&$output, dst, dst);
+  else          Mov::write(&$output, dst, src);
 }
 
 void CodeWriter::write_add(Reg dst, i32 src) {
