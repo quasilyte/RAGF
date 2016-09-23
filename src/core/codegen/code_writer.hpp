@@ -31,6 +31,8 @@ public:
   virtual void write_bit_or(Reg, Reg);
   virtual void write_shift_left(UintReg, u8);
   virtual void write_shift_left(IntReg, u8);
+  virtual void write_shift_right(UintReg, u8);
+  virtual void write_shift_right(IntReg, u8);
 
   virtual void write_while_neq(Reg, i8);
   virtual void write_if_eq(Reg, i8);

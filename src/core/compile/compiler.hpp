@@ -27,6 +27,7 @@ private:
   void parse_bit_and();
   void parse_bit_or();
   void parse_shift_left();
+  void parse_shift_right();
   void parse_swap();
   void parse_neg();
   void parse_while();

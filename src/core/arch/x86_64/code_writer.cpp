@@ -78,6 +78,14 @@ void CodeWriter::write_shift_left(IntReg r, u8 count) {
   write_shift_left(UintReg{r}, count);
 }
 
+void CodeWriter::write_shift_right(UintReg r, u8 count) {
+  Shr::write(&$output, r, count);
+}
+
+void CodeWriter::write_shift_right(IntReg r, u8 count) {
+  Sar::write(&$output, r, count);
+}
+
 void CodeWriter::write_while_neq(Reg a, i8 b) {
   auto jmp_block = $output.preserve(Jmp::size(i32{}));
   int body_size = write_block();

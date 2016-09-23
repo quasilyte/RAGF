@@ -96,14 +96,26 @@ void Compiler::parse_bit_or() {
 }
 
 void Compiler::parse_shift_left() {
-  switch ($input.read<u16>()) {
-  case label(Token::INT_REG, Token::UINT8):
+  switch ($input.read<Token>()) {
+  case Token::INT_REG:
     return encode<IntReg, u8>(&CodeWriter::write_shift_left);
-  case label(Token::UINT_REG, Token::UINT8):
+  case Token::UINT_REG:
     return encode<UintReg, u8>(&CodeWriter::write_shift_left);
 
   default:
     throw "shift_left: invalid dst/src token";
+  }
+}
+
+void Compiler::parse_shift_right() {
+  switch ($input.read<Token>()) {
+  case Token::INT_REG:
+    return encode<IntReg, u8>(&CodeWriter::write_shift_right);
+  case Token::UINT_REG:
+    return encode<UintReg, u8>(&CodeWriter::write_shift_right);
+
+  default:
+    throw "shift_right: invalid dst/src token";
   }
 }
 
@@ -163,6 +175,7 @@ Buf Compiler::compile() {
     PARSER(bit_and);
     PARSER(bit_or);
     PARSER(shift_left);
+    PARSER(shift_right);
     PARSER(assign);
     PARSER(swap);
     PARSER(neg);

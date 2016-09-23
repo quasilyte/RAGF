@@ -26,6 +26,8 @@ public:
   void write_bit_or(Reg, Reg) override;
   void write_shift_left(UintReg, u8) override;
   void write_shift_left(IntReg, u8) override;
+  void write_shift_right(UintReg, u8) override;
+  void write_shift_right(IntReg, u8) override;
   void write_while_neq(Reg, i8) override;
   void write_if_eq(Reg, i8) override;
   void write_if_else_eq(Reg, i8) override;
