@@ -96,7 +96,15 @@ void Compiler::parse_bit_or() {
 }
 
 void Compiler::parse_shift_left() {
-  encode<Reg, u8>(&CodeWriter::write_shift_left);
+  switch ($input.read<u16>()) {
+  case label(Token::INT_REG, Token::UINT8):
+    return encode<IntReg, u8>(&CodeWriter::write_shift_left);
+  case label(Token::UINT_REG, Token::UINT8):
+    return encode<UintReg, u8>(&CodeWriter::write_shift_left);
+
+  default:
+    throw "shift_left: invalid dst/src token";
+  }
 }
 
 void Compiler::parse_assign() {

@@ -69,8 +69,13 @@ void CodeWriter::write_bit_or(Reg dst, Reg src) {
   Or::write(&$output, dst, src);
 }
 
-void CodeWriter::write_shift_left(Reg r, u8 count) {
-  Shl::write(&$output, r, count);
+void CodeWriter::write_shift_left(UintReg r, u8 count) {
+  Shl::write(&$output, Reg{r}, count);
+}
+
+void CodeWriter::write_shift_left(IntReg r, u8 count) {
+  // Because `Sal` & `Shl` are the same
+  write_shift_left(UintReg{r}, count);
 }
 
 void CodeWriter::write_while_neq(Reg a, i8 b) {

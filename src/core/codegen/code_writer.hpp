@@ -29,7 +29,8 @@ public:
   virtual void write_mod(IntReg, IntReg);
   virtual void write_bit_and(Reg, Reg);
   virtual void write_bit_or(Reg, Reg);
-  virtual void write_shift_left(Reg, u8);
+  virtual void write_shift_left(UintReg, u8);
+  virtual void write_shift_left(IntReg, u8);
 
   virtual void write_while_neq(Reg, i8);
   virtual void write_if_eq(Reg, i8);
