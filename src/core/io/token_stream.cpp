@@ -12,13 +12,13 @@ T TokenStream::read() {
 }
 
 template<>
-RegIndex TokenStream::read() {
+Register TokenStream::read() {
   uint index = read_byte();
   if (index > 7) {
     throw "invalid register index";
   }
 
-  return RegIndex{index};
+  return Register{index};
 }
 
 template<>

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <core/io/code_buf.hpp>
-#include <core/reg_index.hpp>
+#include <core/register.hpp>
 
 class Compiler;
 
@@ -16,18 +16,21 @@ public:
   Buf get_buf() const noexcept;
 
   virtual void write_return();
-  virtual void write_swap(RegIndex, RegIndex);
-  virtual void write_neg(RegIndex);
-  virtual void write_assign(RegIndex dst, RegIndex src);
-  virtual void write_assign(RegIndex, i32);
-  virtual void write_assign(RegIndex, i64);
-  virtual void write_add(RegIndex, i32);
-  virtual void write_add(RegIndex, i8);
-  virtual void write_sub(RegIndex, i8);
+  virtual void write_swap(Register, Register);
+  virtual void write_neg(Register);
+  virtual void write_assign(Register dst, Register src);
+  virtual void write_assign(Register, i32);
+  virtual void write_assign(Register, i64);
+  virtual void write_add(Register, i32);
+  virtual void write_add(Register, i8);
+  virtual void write_sub(Register, i8);
+  virtual void write_mul(Register, i8);
+  virtual void write_div(Register, Register);
+  virtual void write_mod(Register, Register);
 
-  virtual void write_while_neq(RegIndex, i8);
-  virtual void write_if_eq(RegIndex, i8);
-  virtual void write_if_else_eq(RegIndex, i8);
+  virtual void write_while_neq(Register, i8);
+  virtual void write_if_eq(Register, i8);
+  virtual void write_if_else_eq(Register, i8);
 
 protected:
   Compiler* $compiler;

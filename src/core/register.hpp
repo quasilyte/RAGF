@@ -2,12 +2,12 @@
 
 #include <core/typedefs.hpp>
 
-struct RegIndex {
-  constexpr RegIndex(uint val): $val{val} {}
+struct Register {
+  constexpr Register(uint id): $id{id} {}
 
   constexpr operator uint() const noexcept {
-    return $val;
+    return $id;
   }
 
-  uint $val;
+  uint $id;
 };

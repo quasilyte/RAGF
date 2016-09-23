@@ -16,19 +16,19 @@ void Compiler::parse_return() {
 }
 
 void Compiler::parse_swap() {
-  encode<RegIndex, RegIndex>(&CodeWriter::write_swap);
+  encode<Register, Register>(&CodeWriter::write_swap);
 }
 
 void Compiler::parse_neg() {
-  $writer->write_neg($input.read<RegIndex>());
+  $writer->write_neg($input.read<Register>());
 }
 
 void Compiler::parse_add() {
   switch ($input.read<u16>()) {
   case label(Token::REG, Token::I8):
-    return encode<RegIndex, i8>(&CodeWriter::write_add);
+    return encode<Register, i8>(&CodeWriter::write_add);
   case label(Token::REG, Token::I32):
-    return encode<RegIndex, i32>(&CodeWriter::write_add);
+    return encode<Register, i32>(&CodeWriter::write_add);
 
   default:
     throw "add: invalid dst/src token";
@@ -38,21 +38,51 @@ void Compiler::parse_add() {
 void Compiler::parse_sub() {
   switch ($input.read<u16>()) {
   case label(Token::REG, Token::I8):
-    return encode<RegIndex, i8>(&CodeWriter::write_sub);
+    return encode<Register, i8>(&CodeWriter::write_sub);
 
   default:
     throw "sub: invalid dst/src token";
   }
 }
 
+void Compiler::parse_mul() {
+  switch ($input.read<u16>()) {
+  case label(Token::REG, Token::I8):
+    return encode<Register, i8>(&CodeWriter::write_mul);
+
+  default:
+    throw "mul: invalid dst/src token";
+  }
+}
+
+void Compiler::parse_div() {
+  switch ($input.read<u16>()) {
+  case label(Token::REG, Token::REG):
+    return encode<Register, Register>(&CodeWriter::write_div);
+
+  default:
+    throw "div: invalid dst/src token";
+  }
+}
+
+void Compiler::parse_mod() {
+  switch ($input.read<u16>()) {
+  case label(Token::REG, Token::REG):
+    return encode<Register, Register>(&CodeWriter::write_mod);
+
+  default:
+    throw "mod: invalid dst/src token";
+  }
+}
+
 void Compiler::parse_assign() {
   switch ($input.read<u16>()) {
   case label(Token::REG, Token::REG):
-    return encode<RegIndex, RegIndex>(&CodeWriter::write_assign);
+    return encode<Register, Register>(&CodeWriter::write_assign);
   case label(Token::REG, Token::I32):
-    return encode<RegIndex, i32>(&CodeWriter::write_assign);
+    return encode<Register, i32>(&CodeWriter::write_assign);
   case label(Token::REG, Token::I64):
-    return encode<RegIndex, i64>(&CodeWriter::write_assign);
+    return encode<Register, i64>(&CodeWriter::write_assign);
 
   default:
     throw "assign: invalid dst/src token";
@@ -62,7 +92,7 @@ void Compiler::parse_assign() {
 void Compiler::parse_while() {
   switch ($input.read<u32>()) {
   case label(Token::NEQ, Token::REG, Token::I8, Token::NIL):
-    return encode<RegIndex, i8>(&CodeWriter::write_while_neq);
+    return encode<Register, i8>(&CodeWriter::write_while_neq);
 
   default:
     throw "while: invalid header tokens";
@@ -72,7 +102,7 @@ void Compiler::parse_while() {
 void Compiler::parse_if() {
   switch ($input.read<u32>()) {
   case label(Token::EQ, Token::REG, Token::I8, Token::NIL):
-    return encode<RegIndex, i8>(&CodeWriter::write_if_eq);
+    return encode<Register, i8>(&CodeWriter::write_if_eq);
 
   default:
     throw "if: invalid header tokens";
@@ -82,7 +112,7 @@ void Compiler::parse_if() {
 void Compiler::parse_if_else() {
   switch ($input.read<u32>()) {
   case label(Token::EQ, Token::REG, Token::I8, Token::NIL):
-    return encode<RegIndex, i8>(&CodeWriter::write_if_else_eq);
+    return encode<Register, i8>(&CodeWriter::write_if_else_eq);
 
   default:
     throw "if/else: invalid header tokens";
@@ -95,6 +125,9 @@ Buf Compiler::compile() {
     PARSER(return);
     PARSER(add);
     PARSER(sub);
+    PARSER(mul);
+    PARSER(div);
+    PARSER(mod);
     PARSER(assign);
     PARSER(swap);
     PARSER(neg);

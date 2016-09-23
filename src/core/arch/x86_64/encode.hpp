@@ -1,7 +1,7 @@
 #pragma once
 
 #include <core/typedefs.hpp>
-#include <core/reg_index.hpp>
+#include <core/register.hpp>
 
 constexpr byte rex(uint val) noexcept {
   return (0b0100 << 4) + val;
@@ -15,7 +15,7 @@ constexpr byte mod_reg_rm(uint mod, uint reg, uint rm) noexcept {
   return (mod << 6) + (reg << 3) + rm;
 }
 
-constexpr byte opcode(uint val, RegIndex index = 0) noexcept {
+constexpr byte opcode(uint val, Register index = 0) noexcept {
   return val + index;
 }
 

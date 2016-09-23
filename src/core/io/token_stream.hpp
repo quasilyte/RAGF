@@ -2,7 +2,7 @@
 
 #include <core/typedefs.hpp>
 #include <core/token.hpp>
-#include <core/reg_index.hpp>
+#include <core/register.hpp>
 
 class TokenStream {
 public:

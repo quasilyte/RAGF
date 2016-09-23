@@ -21,6 +21,9 @@ private:
   void parse_assign();
   void parse_add();
   void parse_sub();
+  void parse_mul();
+  void parse_div();
+  void parse_mod();
   void parse_swap();
   void parse_neg();
   void parse_while();
