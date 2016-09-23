@@ -182,11 +182,21 @@ void Shl::write(CodeBuf* output, Reg r, u8 count) {
 }
 
 template<>
-void Shr::write(CodeBuf* output, Reg r, u8 count) {
+void Shr::write(CodeBuf* output, UintReg r, u8 count) {
   output->write(BinaryValue<8>{
     REX_WB,
     opcode(0xC1),
-    mod_reg_rm(Mod::REG, 4, r),
+    mod_reg_rm(Mod::REG, 5, r),
+    count
+  });
+}
+
+template<>
+void Sar::write(CodeBuf* output, IntReg r, u8 count) {
+  output->write(BinaryValue<8>{
+    REX_WB,
+    opcode(0xC1),
+    mod_reg_rm(Mod::REG, 7, r),
     count
   });
 }
