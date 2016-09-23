@@ -57,8 +57,8 @@ void Compiler::parse_mul() {
 
 void Compiler::parse_div() {
   switch ($input.read<u16>()) {
-  case label(Token::REG, Token::REG):
-    return encode<Reg, Reg>(&CodeWriter::write_div);
+  case label(Token::INT_REG, Token::INT_REG):
+    return encode<IntReg, IntReg>(&CodeWriter::write_div);
 
   default:
     throw "div: invalid dst/src token";
@@ -67,8 +67,8 @@ void Compiler::parse_div() {
 
 void Compiler::parse_mod() {
   switch ($input.read<u16>()) {
-  case label(Token::REG, Token::REG):
-    return encode<Reg, Reg>(&CodeWriter::write_mod);
+  case label(Token::INT_REG, Token::INT_REG):
+    return encode<IntReg, IntReg>(&CodeWriter::write_mod);
 
   default:
     throw "mod: invalid dst/src token";

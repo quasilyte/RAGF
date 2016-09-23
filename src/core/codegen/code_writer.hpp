@@ -25,8 +25,8 @@ public:
   virtual void write_add(Reg, i8);
   virtual void write_sub(Reg, i8);
   virtual void write_mul(IntReg, i8);
-  virtual void write_div(Reg, Reg);
-  virtual void write_mod(Reg, Reg);
+  virtual void write_div(IntReg, IntReg);
+  virtual void write_mod(IntReg, IntReg);
   virtual void write_bit_and(Reg, Reg);
   virtual void write_bit_or(Reg, Reg);
   virtual void write_shift_left(Reg, u8);

@@ -97,7 +97,7 @@ void Imul::write(CodeBuf* output, IntReg dst, IntReg a, i8 src) {
 
 
 template<>
-void Idiv::write(CodeBuf* output, Reg divider) {
+void Idiv::write(CodeBuf* output, IntReg divider) {
   output->write(BinaryValue<8>{
     REX_WB,
     opcode(0xF7),

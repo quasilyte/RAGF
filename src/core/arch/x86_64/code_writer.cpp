@@ -46,19 +46,19 @@ void CodeWriter::write_mul(IntReg dst, i8 src) {
   Imul::write(&$output, dst, dst, src);
 }
 
-void CodeWriter::write_div(Reg dst, Reg src) {
-  Mov::write(&$output, rax, dst);
+void CodeWriter::write_div(IntReg dst, IntReg src) {
+  Mov::write(&$output, rax, Reg{dst});
   Cqo::write(&$output);
   Idiv::write(&$output, src);
-  Mov::write(&$output, dst, rax);
+  Mov::write(&$output, Reg{dst}, rax);
 }
 
-void CodeWriter::write_mod(Reg dst, Reg src) {
+void CodeWriter::write_mod(IntReg dst, IntReg src) {
   // Like div, but uses `rdx' idiv result, instead of `rax'
-  Mov::write(&$output, rax, dst);
+  Mov::write(&$output, rax, Reg{dst});
   Cqo::write(&$output);
   Idiv::write(&$output, src);
-  Mov::write(&$output, dst, rdx);
+  Mov::write(&$output, Reg{dst}, rdx);
 }
 
 void CodeWriter::write_bit_and(Reg dst, Reg src) {
