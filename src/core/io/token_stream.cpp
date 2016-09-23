@@ -1,7 +1,6 @@
 #include <core/io/token_stream.hpp>
 
 TokenStream::TokenStream(const byte* input):
-$input{input},
 $pos{input} {}
 
 template<class T>
@@ -13,13 +12,19 @@ T TokenStream::read() {
 
 template<>
 Reg TokenStream::read() {
-  uint index = read_byte();
-  if (index > 7) {
-    throw "invalid register index";
+  uint id = read_byte();
+  if (id > 7) {
+    throw "invalid register id";
   }
 
-  return Reg{index};
+  return Reg{id};
 }
+
+template<>
+IntReg TokenStream::read() { return IntReg{read<Reg>()}; }
+
+template<>
+UintReg TokenStream::read() { return UintReg{read<Reg>()}; }
 
 template<>
 i8 TokenStream::read() { return read_byte(); }

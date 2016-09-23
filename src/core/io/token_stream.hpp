@@ -14,6 +14,5 @@ public:
   const byte* read_bytes(int count) noexcept;
 
 private:
-  const byte* $input;
   const byte* $pos;
 };

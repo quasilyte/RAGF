@@ -29,6 +29,8 @@ enum class Token: byte {
 
   // Operand types
   REG,
+  INT_REG,
+  UINT_REG,
   MEM,
   INT64,
   INT32,
