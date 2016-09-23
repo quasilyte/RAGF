@@ -4,6 +4,11 @@
 #include <core/arch/x86_64/encode.hpp>
 #include <core/arch/x86_64/gpr_tags.hpp>
 
+int Nop::size() { return 1; }
+void Nop::write(CodeBuf* output) {
+  output->write_byte(0x90);
+}
+
 int Ret::size() { return 1; }
 void Ret::write(CodeBuf* output) {
   output->write_byte(0xC3);

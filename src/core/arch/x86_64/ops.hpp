@@ -33,6 +33,7 @@ class CodeBuf;
      static void write(CodeBuf* output, A PARAM1, B PARAM2, C PARAM3); \
   }
 
+OP0_STUB(Nop);
 OP0_STUB(Ret);
 OP0_STUB(Cqo);
 
