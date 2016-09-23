@@ -77,6 +77,15 @@ void And::write(CodeBuf* output, Reg dst, Reg src) {
 }
 
 template<>
+void Xor::write(CodeBuf* output, Reg dst, Reg src) {
+  output->write(BinaryValue<4>{
+    REX_WRB,
+    opcode(0x31),
+    mod_reg_rm(Mod::REG, src, dst)
+  });
+}
+
+template<>
 void Or::write(CodeBuf* output, Reg dst, Reg src) {
   output->write(BinaryValue<4>{
     REX_WRB,
