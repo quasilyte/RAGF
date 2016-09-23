@@ -1,7 +1,7 @@
 #pragma once
 
 #include <core/typedefs.hpp>
-#include <core/register.hpp>
+#include <core/reg.hpp>
 #include <core/arch/x86_64/constants.hpp>
 
 class CodeBuf;
@@ -49,6 +49,7 @@ OP2_STUB(Or, dst, src);
 OP2_STUB(Xchg, a, b);
 OP2_STUB(Cmp, a, b);
 OP2_STUB(Shl, r, count);
+OP2_STUB(Shr, r, count);
 
 OP3_STUB(Imul, dst, a, b);
 

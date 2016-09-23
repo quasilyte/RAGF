@@ -16,7 +16,7 @@ void Cqo::write(CodeBuf* output) {
 }
 
 template<>
-void Mov::write(CodeBuf* output, Gpr dst, Register src) {
+void Mov::write(CodeBuf* output, Gpr dst, Reg src) {
   output->write(BinaryValue<4>{
     REX_WR,
     opcode(0x89),
@@ -24,7 +24,7 @@ void Mov::write(CodeBuf* output, Gpr dst, Register src) {
   });
 }
 template<>
-void Mov::write(CodeBuf* output, Register dst, Gpr src) {
+void Mov::write(CodeBuf* output, Reg dst, Gpr src) {
   output->write(BinaryValue<4>{
     REX_WB,
     opcode(0x89),
@@ -32,7 +32,7 @@ void Mov::write(CodeBuf* output, Register dst, Gpr src) {
   });
 }
 template<>
-void Mov::write(CodeBuf* output, Register dst, Register src) {
+void Mov::write(CodeBuf* output, Reg dst, Reg src) {
   output->write(BinaryValue<4>{
     REX_WRB,
     opcode(0x89),
@@ -40,7 +40,7 @@ void Mov::write(CodeBuf* output, Register dst, Register src) {
   });
 }
 template<>
-void Mov::write(CodeBuf* output, Register dst, i32 src) {
+void Mov::write(CodeBuf* output, Reg dst, i32 src) {
   output->write(BinaryValue<8>{
     REX_WB,
     opcode(0xC7),
@@ -49,7 +49,7 @@ void Mov::write(CodeBuf* output, Register dst, i32 src) {
   });
 }
 template<>
-void Mov::write(CodeBuf *output, Register dst, i64 src) {
+void Mov::write(CodeBuf *output, Reg dst, i64 src) {
   output->write(BinaryValue<16>{
     REX_WB,
     opcode(0xB8, dst),
@@ -58,7 +58,7 @@ void Mov::write(CodeBuf *output, Register dst, i64 src) {
 }
 
 template<>
-void Sub::write(CodeBuf* output, Register dst, i8 src) {
+void Sub::write(CodeBuf* output, Reg dst, i8 src) {
   output->write(BinaryValue<8>{
     REX_WB,
     opcode(0x83),
@@ -68,7 +68,7 @@ void Sub::write(CodeBuf* output, Register dst, i8 src) {
 }
 
 template<>
-void And::write(CodeBuf* output, Register dst, Register src) {
+void And::write(CodeBuf* output, Reg dst, Reg src) {
   output->write(BinaryValue<4>{
     REX_WRB,
     opcode(0x21),
@@ -77,7 +77,7 @@ void And::write(CodeBuf* output, Register dst, Register src) {
 }
 
 template<>
-void Or::write(CodeBuf* output, Register dst, Register src) {
+void Or::write(CodeBuf* output, Reg dst, Reg src) {
   output->write(BinaryValue<4>{
     REX_WRB,
     opcode(0x09),
@@ -86,7 +86,7 @@ void Or::write(CodeBuf* output, Register dst, Register src) {
 }
 
 template<>
-void Imul::write(CodeBuf* output, Register dst, Register a, i8 src) {
+void Imul::write(CodeBuf* output, Reg dst, Reg a, i8 src) {
   output->write(BinaryValue<4>{
     REX_WRB,
     opcode(0x6B),
@@ -97,7 +97,7 @@ void Imul::write(CodeBuf* output, Register dst, Register a, i8 src) {
 
 
 template<>
-void Idiv::write(CodeBuf* output, Register divider) {
+void Idiv::write(CodeBuf* output, Reg divider) {
   output->write(BinaryValue<8>{
     REX_WB,
     opcode(0xF7),
@@ -106,7 +106,7 @@ void Idiv::write(CodeBuf* output, Register divider) {
 }
 
 template<>
-void Add::write(CodeBuf* output, Register dst, i8 src) {
+void Add::write(CodeBuf* output, Reg dst, i8 src) {
   output->write(BinaryValue<8>{
     REX_WB,
     opcode(0x83),
@@ -115,7 +115,7 @@ void Add::write(CodeBuf* output, Register dst, i8 src) {
   });
 }
 template<>
-void Add::write(CodeBuf* output, Register dst, i32 src) {
+void Add::write(CodeBuf* output, Reg dst, i32 src) {
   output->write(BinaryValue<8>{
     REX_WB,
     opcode(0x81),
@@ -125,7 +125,7 @@ void Add::write(CodeBuf* output, Register dst, i32 src) {
 }
 
 template<>
-void Neg::write(CodeBuf* output, Register r) {
+void Neg::write(CodeBuf* output, Reg r) {
   output->write(BinaryValue<8>{
     REX_WB,
     opcode(0xF7),
@@ -152,7 +152,7 @@ void Jmp::write(CodeBuf* output, i32 offset) {
 }
 
 template<>
-void Xchg::write(CodeBuf* output, Register a, Register b) {
+void Xchg::write(CodeBuf* output, Reg a, Reg b) {
   output->write(BinaryValue<4>{
     REX_WRB,
     opcode(0x87),
@@ -160,9 +160,9 @@ void Xchg::write(CodeBuf* output, Register a, Register b) {
   });
 }
 
-template<> int Cmp::size(Register, i8) { return 4; }
+template<> int Cmp::size(Reg, i8) { return 4; }
 template<>
-void Cmp::write(CodeBuf* output, Register a, i8 b) {
+void Cmp::write(CodeBuf* output, Reg a, i8 b) {
   output->write(BinaryValue<4>{
     REX_WB,
     opcode(0x83),
@@ -172,7 +172,17 @@ void Cmp::write(CodeBuf* output, Register a, i8 b) {
 }
 
 template<>
-void Shl::write(CodeBuf* output, Register r, u8 count) {
+void Shl::write(CodeBuf* output, Reg r, u8 count) {
+  output->write(BinaryValue<8>{
+    REX_WB,
+    opcode(0xC1),
+    mod_reg_rm(Mod::REG, 4, r),
+    count
+  });
+}
+
+template<>
+void Shr::write(CodeBuf* output, Reg r, u8 count) {
   output->write(BinaryValue<8>{
     REX_WB,
     opcode(0xC1),

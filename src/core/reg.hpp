@@ -2,8 +2,8 @@
 
 #include <core/typedefs.hpp>
 
-struct Register {
-  constexpr Register(uint id): $id{id} {}
+struct Reg {
+  constexpr Reg(uint id): $id{id} {}
 
   constexpr operator uint() const noexcept {
     return $id;

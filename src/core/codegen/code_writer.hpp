@@ -1,7 +1,7 @@
 #pragma once
 
 #include <core/io/code_buf.hpp>
-#include <core/register.hpp>
+#include <core/reg.hpp>
 
 class Compiler;
 
@@ -16,24 +16,24 @@ public:
   Buf get_buf() const noexcept;
 
   virtual void write_return();
-  virtual void write_swap(Register, Register);
-  virtual void write_neg(Register);
-  virtual void write_assign(Register dst, Register src);
-  virtual void write_assign(Register, i32);
-  virtual void write_assign(Register, i64);
-  virtual void write_add(Register, i32);
-  virtual void write_add(Register, i8);
-  virtual void write_sub(Register, i8);
-  virtual void write_mul(Register, i8);
-  virtual void write_div(Register, Register);
-  virtual void write_mod(Register, Register);
-  virtual void write_bit_and(Register, Register);
-  virtual void write_bit_or(Register, Register);
-  virtual void write_shift_left(Register, u8);
+  virtual void write_swap(Reg, Reg);
+  virtual void write_neg(Reg);
+  virtual void write_assign(Reg dst, Reg src);
+  virtual void write_assign(Reg, i32);
+  virtual void write_assign(Reg, i64);
+  virtual void write_add(Reg, i32);
+  virtual void write_add(Reg, i8);
+  virtual void write_sub(Reg, i8);
+  virtual void write_mul(Reg, i8);
+  virtual void write_div(Reg, Reg);
+  virtual void write_mod(Reg, Reg);
+  virtual void write_bit_and(Reg, Reg);
+  virtual void write_bit_or(Reg, Reg);
+  virtual void write_shift_left(Reg, u8);
 
-  virtual void write_while_neq(Register, i8);
-  virtual void write_if_eq(Register, i8);
-  virtual void write_if_else_eq(Register, i8);
+  virtual void write_while_neq(Reg, i8);
+  virtual void write_if_eq(Reg, i8);
+  virtual void write_if_else_eq(Reg, i8);
 
 protected:
   Compiler* $compiler;
