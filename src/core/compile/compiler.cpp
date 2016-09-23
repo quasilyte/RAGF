@@ -75,6 +75,26 @@ void Compiler::parse_mod() {
   }
 }
 
+void Compiler::parse_bit_and() {
+  switch ($input.read<u16>()) {
+  case label(Token::REG, Token::REG):
+    return encode<Register, Register>(&CodeWriter::write_bit_and);
+
+  default:
+    throw "bit_and: invalid dst/src token";
+  }
+}
+
+void Compiler::parse_bit_or() {
+  switch ($input.read<u16>()) {
+  case label(Token::REG, Token::REG):
+    return encode<Register, Register>(&CodeWriter::write_bit_or);
+
+  default:
+    throw "bit_or: invalid dst/src token";
+  }
+}
+
 void Compiler::parse_assign() {
   switch ($input.read<u16>()) {
   case label(Token::REG, Token::REG):
@@ -128,6 +148,8 @@ Buf Compiler::compile() {
     PARSER(mul);
     PARSER(div);
     PARSER(mod);
+    PARSER(bit_and);
+    PARSER(bit_or);
     PARSER(assign);
     PARSER(swap);
     PARSER(neg);

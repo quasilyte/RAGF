@@ -22,6 +22,8 @@ public:
   void write_mul(Register, i8) override;
   void write_div(Register, Register) override;
   void write_mod(Register, Register) override;
+  void write_bit_and(Register, Register) override;
+  void write_bit_or(Register, Register) override;
   void write_while_neq(Register, i8) override;
   void write_if_eq(Register, i8) override;
   void write_if_else_eq(Register, i8) override;

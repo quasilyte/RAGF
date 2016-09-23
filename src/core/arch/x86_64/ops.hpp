@@ -44,6 +44,8 @@ OP1_STUB(Idiv, divider);
 OP2_STUB(Mov, dst, src);
 OP2_STUB(Add, dst, src);
 OP2_STUB(Sub, dst, src);
+OP2_STUB(And, dst, src);
+OP2_STUB(Or, dst, src);
 OP2_STUB(Xchg, a, b);
 OP2_STUB(Cmp, a, b);
 

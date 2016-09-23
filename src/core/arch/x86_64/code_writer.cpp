@@ -61,6 +61,14 @@ void CodeWriter::write_mod(Register dst, Register src) {
   Mov::write(&$output, dst, rdx);
 }
 
+void CodeWriter::write_bit_and(Register dst, Register src) {
+  And::write(&$output, dst, src);
+}
+
+void CodeWriter::write_bit_or(Register dst, Register src) {
+  Or::write(&$output, dst, src);
+}
+
 void CodeWriter::write_while_neq(Register a, i8 b) {
   auto jmp_block = $output.preserve(Jmp::size(i32{}));
   int body_size = write_block();

@@ -27,6 +27,8 @@ public:
   virtual void write_mul(Register, i8);
   virtual void write_div(Register, Register);
   virtual void write_mod(Register, Register);
+  virtual void write_bit_and(Register, Register);
+  virtual void write_bit_or(Register, Register);
 
   virtual void write_while_neq(Register, i8);
   virtual void write_if_eq(Register, i8);

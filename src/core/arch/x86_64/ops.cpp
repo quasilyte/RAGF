@@ -68,6 +68,24 @@ void Sub::write(CodeBuf* output, Register dst, i8 src) {
 }
 
 template<>
+void And::write(CodeBuf* output, Register dst, Register src) {
+  output->write(BinaryValue<4>{
+    REX_WRB,
+    opcode(0x21),
+    mod_reg_rm(Mod::REG, src, dst)
+  });
+}
+
+template<>
+void Or::write(CodeBuf* output, Register dst, Register src) {
+  output->write(BinaryValue<4>{
+    REX_WRB,
+    opcode(0x09),
+    mod_reg_rm(Mod::REG, src, dst)
+  });
+}
+
+template<>
 void Imul::write(CodeBuf* output, Register dst, Register a, i8 src) {
   output->write(BinaryValue<4>{
     REX_WRB,

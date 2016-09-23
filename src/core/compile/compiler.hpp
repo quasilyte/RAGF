@@ -24,6 +24,8 @@ private:
   void parse_mul();
   void parse_div();
   void parse_mod();
+  void parse_bit_and();
+  void parse_bit_or();
   void parse_swap();
   void parse_neg();
   void parse_while();
