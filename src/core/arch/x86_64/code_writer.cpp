@@ -42,8 +42,8 @@ void CodeWriter::write_sub(Reg dst, i8 src) {
   Sub::write(&$output, dst, src);
 }
 
-void CodeWriter::write_mul(Reg dst, i8 src) {
-  Imul::write(&$output, dst, Reg{2}, src);
+void CodeWriter::write_mul(IntReg dst, i8 src) {
+  Imul::write(&$output, dst, dst, src);
 }
 
 void CodeWriter::write_div(Reg dst, Reg src) {

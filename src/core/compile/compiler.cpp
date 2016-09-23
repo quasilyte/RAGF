@@ -47,8 +47,8 @@ void Compiler::parse_sub() {
 
 void Compiler::parse_mul() {
   switch ($input.read<u16>()) {
-  case label(Token::REG, Token::INT8):
-    return encode<Reg, i8>(&CodeWriter::write_mul);
+  case label(Token::INT_REG, Token::INT8):
+    return encode<IntReg, i8>(&CodeWriter::write_mul);
 
   default:
     throw "mul: invalid dst/src token";

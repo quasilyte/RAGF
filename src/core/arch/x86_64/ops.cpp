@@ -86,7 +86,7 @@ void Or::write(CodeBuf* output, Reg dst, Reg src) {
 }
 
 template<>
-void Imul::write(CodeBuf* output, Reg dst, Reg a, i8 src) {
+void Imul::write(CodeBuf* output, IntReg dst, IntReg a, i8 src) {
   output->write(BinaryValue<4>{
     REX_WRB,
     opcode(0x6B),

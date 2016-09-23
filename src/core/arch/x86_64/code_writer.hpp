@@ -19,7 +19,7 @@ public:
   void write_add(Reg, i32) override;
   void write_add(Reg, i8) override;
   void write_sub(Reg, i8) override;
-  void write_mul(Reg, i8) override;
+  void write_mul(IntReg, i8) override;
   void write_div(Reg, Reg) override;
   void write_mod(Reg, Reg) override;
   void write_bit_and(Reg, Reg) override;
