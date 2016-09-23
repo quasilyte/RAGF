@@ -170,3 +170,13 @@ void Cmp::write(CodeBuf* output, Register a, i8 b) {
     b
   });
 }
+
+template<>
+void Shl::write(CodeBuf* output, Register r, u8 count) {
+  output->write(BinaryValue<8>{
+    REX_WB,
+    opcode(0xC1),
+    mod_reg_rm(Mod::REG, 4, r),
+    count
+  });
+}

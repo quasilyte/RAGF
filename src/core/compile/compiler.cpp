@@ -95,6 +95,10 @@ void Compiler::parse_bit_or() {
   }
 }
 
+void Compiler::parse_shift_left() {
+  encode<Register, u8>(&CodeWriter::write_shift_left);
+}
+
 void Compiler::parse_assign() {
   switch ($input.read<u16>()) {
   case label(Token::REG, Token::REG):
@@ -150,6 +154,7 @@ Buf Compiler::compile() {
     PARSER(mod);
     PARSER(bit_and);
     PARSER(bit_or);
+    PARSER(shift_left);
     PARSER(assign);
     PARSER(swap);
     PARSER(neg);

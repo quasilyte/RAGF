@@ -48,6 +48,7 @@ OP2_STUB(And, dst, src);
 OP2_STUB(Or, dst, src);
 OP2_STUB(Xchg, a, b);
 OP2_STUB(Cmp, a, b);
+OP2_STUB(Shl, r, count);
 
 OP3_STUB(Imul, dst, a, b);
 

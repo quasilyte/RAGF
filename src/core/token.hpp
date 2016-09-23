@@ -16,6 +16,7 @@ enum class Token: byte {
   MOD,
   BIT_AND,
   BIT_OR,
+  SHIFT_LEFT,
   ASSIGN,
   SWAP,
   NEG,

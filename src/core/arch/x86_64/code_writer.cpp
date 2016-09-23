@@ -69,6 +69,10 @@ void CodeWriter::write_bit_or(Register dst, Register src) {
   Or::write(&$output, dst, src);
 }
 
+void CodeWriter::write_shift_left(Register r, u8 count) {
+  Shl::write(&$output, r, count);
+}
+
 void CodeWriter::write_while_neq(Register a, i8 b) {
   auto jmp_block = $output.preserve(Jmp::size(i32{}));
   int body_size = write_block();
