@@ -30,12 +30,12 @@ enum class Token: byte {
   // Operand types
   REG,
   MEM,
-  I64,
-  I32,
-  I8,
-  U64,
-  U32,
-  U8,
+  INT64,
+  INT32,
+  INT8,
+  UINT64,
+  UINT32,
+  UINT8,
 
   // Relation (binary) conditions
   EQ,

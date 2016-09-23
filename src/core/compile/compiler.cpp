@@ -25,9 +25,9 @@ void Compiler::parse_neg() {
 
 void Compiler::parse_add() {
   switch ($input.read<u16>()) {
-  case label(Token::REG, Token::I8):
+  case label(Token::REG, Token::INT8):
     return encode<Reg, i8>(&CodeWriter::write_add);
-  case label(Token::REG, Token::I32):
+  case label(Token::REG, Token::INT32):
     return encode<Reg, i32>(&CodeWriter::write_add);
 
   default:
@@ -37,7 +37,7 @@ void Compiler::parse_add() {
 
 void Compiler::parse_sub() {
   switch ($input.read<u16>()) {
-  case label(Token::REG, Token::I8):
+  case label(Token::REG, Token::INT8):
     return encode<Reg, i8>(&CodeWriter::write_sub);
 
   default:
@@ -47,7 +47,7 @@ void Compiler::parse_sub() {
 
 void Compiler::parse_mul() {
   switch ($input.read<u16>()) {
-  case label(Token::REG, Token::I8):
+  case label(Token::REG, Token::INT8):
     return encode<Reg, i8>(&CodeWriter::write_mul);
 
   default:
@@ -103,9 +103,9 @@ void Compiler::parse_assign() {
   switch ($input.read<u16>()) {
   case label(Token::REG, Token::REG):
     return encode<Reg, Reg>(&CodeWriter::write_assign);
-  case label(Token::REG, Token::I32):
+  case label(Token::REG, Token::INT32):
     return encode<Reg, i32>(&CodeWriter::write_assign);
-  case label(Token::REG, Token::I64):
+  case label(Token::REG, Token::INT64):
     return encode<Reg, i64>(&CodeWriter::write_assign);
 
   default:
@@ -115,7 +115,7 @@ void Compiler::parse_assign() {
 
 void Compiler::parse_while() {
   switch ($input.read<u32>()) {
-  case label(Token::NEQ, Token::REG, Token::I8, Token::NIL):
+  case label(Token::NEQ, Token::REG, Token::INT8, Token::NIL):
     return encode<Reg, i8>(&CodeWriter::write_while_neq);
 
   default:
@@ -125,7 +125,7 @@ void Compiler::parse_while() {
 
 void Compiler::parse_if() {
   switch ($input.read<u32>()) {
-  case label(Token::EQ, Token::REG, Token::I8, Token::NIL):
+  case label(Token::EQ, Token::REG, Token::INT8, Token::NIL):
     return encode<Reg, i8>(&CodeWriter::write_if_eq);
 
   default:
@@ -135,7 +135,7 @@ void Compiler::parse_if() {
 
 void Compiler::parse_if_else() {
   switch ($input.read<u32>()) {
-  case label(Token::EQ, Token::REG, Token::I8, Token::NIL):
+  case label(Token::EQ, Token::REG, Token::INT8, Token::NIL):
     return encode<Reg, i8>(&CodeWriter::write_if_else_eq);
 
   default:
