@@ -11,3 +11,11 @@ struct Reg {
 
   uint $id;
 };
+
+struct UintReg: Reg {
+  using Reg::Reg;
+};
+
+struct IntReg: Reg {
+  using Reg::Reg;
+};
