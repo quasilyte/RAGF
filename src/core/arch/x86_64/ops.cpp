@@ -153,6 +153,14 @@ void Add::write(CodeBuf *output, Reg dst, Reg src) {
     mod_reg_rm(Mod::REG, src, dst)
   });
 }
+template<>
+void Add::write(CodeBuf *output, Reg dst, Mem64 src) {
+  output->write(BinaryValue<4>{
+    REX_WRB,
+    opcode(0x03),
+    mod_reg_rm(Mod::SIB, dst, src)
+  });
+}
 
 template<>
 void Neg::write(CodeBuf* output, Reg r) {
