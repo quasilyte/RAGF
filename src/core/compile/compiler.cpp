@@ -131,10 +131,8 @@ void Compiler::parse_assign() {
     return encode<Reg, i32>(&CodeWriter::write_assign);
   case T2(REG, INT64):
     return encode<Reg, i64>(&CodeWriter::write_assign);
-  case T2(REG, MEM64): {
-    i8 disp = $input.read<i8>();
-    return encode<Reg, Mem64>(&CodeWriter::write_assign, disp);
-  }
+  case T2(REG, MEM64):
+    return encode<Reg, Mem64, i8>(&CodeWriter::write_assign);
   case T2(REG, DATA):
     return $writer->write_assign($input.read<Reg>(), DataReg{});
 

@@ -34,11 +34,19 @@ private:
   void parse_if();
   void parse_if_else();
 
-  template<class A, class B, class ...FORWARD>
-  void encode(void(CodeWriter::*method)(A, B, FORWARD...), FORWARD... args) {
+  template<class A, class B>
+  void encode(void(CodeWriter::*method)(A, B)) {
     auto a = $input.read<A>();
     auto b = $input.read<B>();
-    ($writer->*method)(a, b, args...);
+    ($writer->*method)(a, b);
+  }
+
+  template<class A, class B, class C>
+  void encode(void(CodeWriter::*method)(A, B, C)) {
+    auto a = $input.read<A>();
+    auto b = $input.read<B>();
+    auto c = $input.read<C>();
+    ($writer->*method)(a, b, c);
   }
 
   Buf get_result();
