@@ -6,6 +6,21 @@
 
 class CodeBuf;
 
+#define SIG1(PARAM) \
+  template<class A> static int size(A); \
+  template<class A> \
+  static void write(CodeBuf* output, A PARAM)
+
+#define SIG2(PARAM1, PARAM2) \
+  template<class A, class B> static int size(A, B); \
+  template<class A, class B> \
+  static void write(CodeBuf* output, A PARAM1, B PARAM2)
+
+#define SIG3(PARAM1, PARAM2, PARAM3) \
+  template<class A, class B, class C> static int size(A, B, C); \
+  template<class A, class B, class C> \
+  static void write(CodeBuf* output, A PARAM1, B PARAM2, C PARAM3)
+
 #define OP0_STUB(NAME) \
   struct NAME { \
     static int size(); \
@@ -13,25 +28,13 @@ class CodeBuf;
   }
 
 #define OP1_STUB(NAME, PARAM) \
-  struct NAME { \
-     template<class A> static int size(A); \
-     template<class A> \
-     static void write(CodeBuf* output, A PARAM); \
-  }
+  struct NAME { SIG1(PARAM); }
 
 #define OP2_STUB(NAME, PARAM1, PARAM2) \
-  struct NAME { \
-     template<class A, class B> static int size(A, B); \
-     template<class A, class B> \
-     static void write(CodeBuf* output, A PARAM1, B PARAM2); \
-  }
+  struct NAME { SIG2(PARAM1, PARAM2); }
 
 #define OP3_STUB(NAME, PARAM1, PARAM2, PARAM3) \
-  struct NAME { \
-     template<class A, class B, class C> static int size(A, B, C); \
-     template<class A, class B, class C> \
-     static void write(CodeBuf* output, A PARAM1, B PARAM2, C PARAM3); \
-  }
+  struct NAME { SIG3(PARAM1, PARAM2, PARAM3); }
 
 OP0_STUB(Nop);
 OP0_STUB(Ret);
@@ -53,22 +56,19 @@ OP2_STUB(Shl, r, count);
 OP2_STUB(Shr, r, count);
 OP2_STUB(Sar, r, count);
 
-// OP3_STUB(Imul, dst, a, b);
 struct Imul {
-  template<class ...ARGS>
-  static void write(CodeBuf* output, ARGS...args);
+  SIG2(dst, src);
+  SIG3(dst, a, b);
 };
 
 struct Mov {
-  template<class A, class B> static int size(A, B);
-  template<class A, class B>
-  static void write(CodeBuf* output, A dst, B src);
-
-  template<class A, class B, class C> static int size(A, B, C);
-  template<class A, class B, class C>
-  static void write(CodeBuf* output, A dst, B mem_src, C disp);
+  SIG2(dst, src);
+  SIG3(dst, mem_src, disp);
 };
 
+#undef SIG1
+#undef SIG2
+#undef SIG3
 #undef OP0_STUB
 #undef OP1_STUB
 #undef OP2_STUB
