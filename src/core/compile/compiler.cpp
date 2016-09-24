@@ -43,6 +43,12 @@ void Compiler::parse_sub() {
   switch ($input.read<u16>()) {
   case T2(REG, INT8):
     return encode<Reg, i8>(&CodeWriter::write_sub);
+  case T2(REG, INT32):
+    return encode<Reg, i32>(&CodeWriter::write_sub);
+  case T2(REG, REG):
+    return encode<Reg, Reg>(&CodeWriter::write_sub);
+  case T2(REG, MEM64):
+    return encode<Reg, Mem64>(&CodeWriter::write_sub);
 
   default:
     throw "sub: invalid dst/src token";

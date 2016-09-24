@@ -60,6 +60,18 @@ void CodeWriter::write_sub(Reg dst, i8 src) {
   Sub::write(&$output, dst, src);
 }
 
+void CodeWriter::write_sub(Reg dst, i32 src) {
+  Sub::write(&$output, dst, src);
+}
+
+void CodeWriter::write_sub(Reg dst, Reg src) {
+  Sub::write(&$output, dst, src);
+}
+
+void CodeWriter::write_sub(Reg dst, Mem64 src) {
+  Sub::write(&$output, dst, src);
+}
+
 void CodeWriter::write_mul(IntReg dst, i8 src) {
   Imul::write(&$output, dst, dst, src);
 }

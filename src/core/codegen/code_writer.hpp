@@ -32,6 +32,9 @@ public:
   virtual void write_add(Reg, Mem64);
 
   virtual void write_sub(Reg, i8);
+  virtual void write_sub(Reg, i32);
+  virtual void write_sub(Reg, Reg);
+  virtual void write_sub(Reg, Mem64);
 
   virtual void write_mul(IntReg, i8);
 

@@ -26,6 +26,9 @@ public:
   void write_add(Reg, Mem64) override;
 
   void write_sub(Reg, i8) override;
+  void write_sub(Reg, i32) override;
+  void write_sub(Reg, Reg) override;
+  void write_sub(Reg, Mem64) override;
 
   void write_mul(IntReg, i8) override;
 

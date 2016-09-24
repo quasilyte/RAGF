@@ -81,11 +81,36 @@ void Mov::write(CodeBuf *output, Reg dst, Mem64 src, i8 disp) {
 
 template<>
 void Sub::write(CodeBuf* output, Reg dst, i8 src) {
-  output->write(BinaryValue<8>{
+  output->write(BinaryValue<4>{
     REX_WB,
     opcode(0x83),
     mod_reg_rm(Mod::REG, 5, dst),
     src
+  });
+}
+template<>
+void Sub::write(CodeBuf* output, Reg dst, i32 src) {
+  output->write(BinaryValue<8>{
+    REX_WB,
+    opcode(0x81),
+    mod_reg_rm(Mod::REG, 5, dst),
+    src
+  });
+}
+template<>
+void Sub::write(CodeBuf* output, Reg dst, Reg src) {
+  output->write(BinaryValue<4>{
+    REX_WRB,
+    opcode(0x29),
+    mod_reg_rm(Mod::REG, src, dst),
+  });
+}
+template<>
+void Sub::write(CodeBuf* output, Reg dst, Mem64 src) {
+  output->write(BinaryValue<4>{
+    REX_WRB,
+    opcode(0x2B),
+    mod_reg_rm(Mod::SIB, dst, src)
   });
 }
 
