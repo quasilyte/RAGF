@@ -42,7 +42,6 @@ OP1_STUB(Jmp, offset);
 OP1_STUB(Neg, r);
 OP1_STUB(Idiv, divider);
 
-OP2_STUB(Mov, dst, src);
 OP2_STUB(Add, dst, src);
 OP2_STUB(Sub, dst, src);
 OP2_STUB(And, dst, src);
@@ -55,6 +54,16 @@ OP2_STUB(Shr, r, count);
 OP2_STUB(Sar, r, count);
 
 OP3_STUB(Imul, dst, a, b);
+
+struct Mov {
+  template<class A, class B> static int size(A, B);
+  template<class A, class B>
+  static void write(CodeBuf* output, A dst, B src);
+
+  template<class A, class B, class C> static int size(A, B, C);
+  template<class A, class B, class C>
+  static void write(CodeBuf* output, A dst, B mem_src, C disp);
+};
 
 #undef OP0_STUB
 #undef OP1_STUB

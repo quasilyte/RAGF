@@ -62,12 +62,21 @@ void Mov::write(CodeBuf *output, Reg dst, i64 src) {
   });
 }
 template<>
-void Mov::write(CodeBuf *output, Reg dst, Mem64 src) {
-  output->write(BinaryValue<4>{
-    REX_WRB,
-    opcode(0x8B),
-    mod_reg_rm(Mod::SIB, dst, src)
-  });
+void Mov::write(CodeBuf *output, Reg dst, Mem64 src, i8 disp) {
+  if (disp == 0) {
+    output->write(BinaryValue<4>{
+      REX_WRB,
+      opcode(0x8B),
+      mod_reg_rm(Mod::SIB, dst, src)
+    });
+  } else {
+    output->write(BinaryValue<4>{
+      REX_WRB,
+      opcode(0x8B),
+      mod_reg_rm(Mod::DISP1, dst, src),
+      disp
+    });
+  }
 }
 
 template<>

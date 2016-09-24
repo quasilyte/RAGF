@@ -24,14 +24,14 @@ void Compiler::parse_neg() {
 }
 
 void Compiler::parse_add() {
-  switch ($input.read<u32>()) {
-  case T4(REG, INT8, NIL, NIL):
+  switch ($input.read<u16>()) {
+  case T2(REG, INT8):
     return encode<Reg, i8>(&CodeWriter::write_add);
-  case T4(REG, INT32, NIL, NIL):
+  case T2(REG, INT32):
     return encode<Reg, i32>(&CodeWriter::write_add);
-  case T4(REG, REG, NIL, NIL):
+  case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_add);
-  case T4(REG, MEM64, NIL, NIL):
+  case T2(REG, MEM64):
     return encode<Reg, Mem64>(&CodeWriter::write_add);
 
   default:
@@ -131,8 +131,10 @@ void Compiler::parse_assign() {
     return encode<Reg, i32>(&CodeWriter::write_assign);
   case T2(REG, INT64):
     return encode<Reg, i64>(&CodeWriter::write_assign);
-  case T2(REG, MEM64):
-    return encode<Reg, Mem64>(&CodeWriter::write_assign);
+  case T2(REG, MEM64): {
+    i8 disp = $input.read<i8>();
+    return encode<Reg, Mem64>(&CodeWriter::write_assign, disp);
+  }
   case T2(REG, DATA):
     return $writer->write_assign($input.read<Reg>(), DataReg{});
 
