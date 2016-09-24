@@ -53,7 +53,11 @@ OP2_STUB(Shl, r, count);
 OP2_STUB(Shr, r, count);
 OP2_STUB(Sar, r, count);
 
-OP3_STUB(Imul, dst, a, b);
+// OP3_STUB(Imul, dst, a, b);
+struct Imul {
+  template<class ...ARGS>
+  static void write(CodeBuf* output, ARGS...args);
+};
 
 struct Mov {
   template<class A, class B> static int size(A, B);

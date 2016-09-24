@@ -31,6 +31,7 @@ public:
   void write_sub(Reg, Mem64) override;
 
   void write_mul(IntReg, i8) override;
+  void write_mul(IntReg, IntReg) override;
 
   void write_div(IntReg, IntReg) override;
 

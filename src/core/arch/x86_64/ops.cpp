@@ -150,7 +150,14 @@ void Imul::write(CodeBuf* output, IntReg dst, IntReg a, i8 src) {
     src
   });
 }
-
+template<>
+void Imul::write(CodeBuf* output, IntReg dst, IntReg src) {
+  output->write(BinaryValue<4>{
+    REX_WRB,
+    opcode(0x0F, 0xAF),
+    mod_reg_rm(Mod::REG, dst, src)
+  });
+}
 
 template<>
 void Idiv::write(CodeBuf* output, IntReg divider) {

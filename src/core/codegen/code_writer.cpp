@@ -46,6 +46,8 @@ MOCK(write_sub(Reg, Reg))
 MOCK(write_sub(Reg, Mem64))
 
 MOCK(write_mul(IntReg, i8))
+MOCK(write_mul(IntReg, IntReg))
+
 MOCK(write_div(IntReg, IntReg))
 MOCK(write_mod(IntReg, IntReg))
 MOCK(write_shift_left(UintReg, u8))

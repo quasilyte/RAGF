@@ -59,6 +59,8 @@ void Compiler::parse_mul() {
   switch ($input.read<u16>()) {
   case T2(INT_REG, INT8):
     return encode<IntReg, i8>(&CodeWriter::write_mul);
+  case T2(INT_REG, INT_REG):
+    return encode<IntReg, IntReg>(&CodeWriter::write_mul);
 
   default:
     throw "mul: invalid dst/src token";

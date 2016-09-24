@@ -76,6 +76,10 @@ void CodeWriter::write_mul(IntReg dst, i8 src) {
   Imul::write(&$output, dst, dst, src);
 }
 
+void CodeWriter::write_mul(IntReg dst, IntReg src) {
+  Imul::write(&$output, dst, src);
+}
+
 void CodeWriter::write_div(IntReg dst, IntReg src) {
   Mov::write(&$output, rax, Reg{dst});
   Cqo::write(&$output);

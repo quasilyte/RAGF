@@ -37,6 +37,7 @@ public:
   virtual void write_sub(Reg, Mem64);
 
   virtual void write_mul(IntReg, i8);
+  virtual void write_mul(IntReg, IntReg);
 
   virtual void write_div(IntReg, IntReg);
 
