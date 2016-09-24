@@ -1,0 +1,9 @@
+#+CAPTION: compiler tasks
+| Task                    | Priority |
+|-------------------------+----------|
+| Memory ops              | 4/5      |
+| For loops               | 4/5      |
+| Composite types model   | 4/5      |
+| SIMD ops                | 3/5      |
+| float32/64 ops          | 3/5      |
+| Support for expressions | 3/5      |
