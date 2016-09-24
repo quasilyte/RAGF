@@ -65,6 +65,8 @@ r[0] = r[1] * 20    # imul r0, r1, 20
 
 ### SIMD
 
+# Note: SIMD operations syntax is not confirmed yet, its WIP
+
 m64[0, 4] <<= 1
 m8[0, 8] += 10 
 
