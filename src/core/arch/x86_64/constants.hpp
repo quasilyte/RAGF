@@ -17,8 +17,8 @@ const Gpr rdx{2};
 const Gpr rbx{3};
 const Gpr rsp{4};
 const Gpr rbp{5};
-const Gpr rsi{6};
-const Gpr rdi{7};
+const Gpr rsi{6}; // Used to pass code
+const Gpr rdi{7}; // Used to pass data
 
 struct Mod {
   static const u64 SIB = 0;
