@@ -16,8 +16,11 @@ public:
   void write_assign(Reg dst, Reg src) override;
   void write_assign(Reg, i32) override;
   void write_assign(Reg, i64) override;
+  void write_assign(Reg, Mem64) override;
+  void write_assign(Reg, DataReg) override;
   void write_add(Reg, i32) override;
   void write_add(Reg, i8) override;
+  void write_add(Reg, Reg) override;
   void write_sub(Reg, i8) override;
   void write_mul(IntReg, i8) override;
   void write_div(IntReg, IntReg) override;

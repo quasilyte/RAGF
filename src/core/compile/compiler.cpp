@@ -29,6 +29,8 @@ void Compiler::parse_add() {
     return encode<Reg, i8>(&CodeWriter::write_add);
   case label(Token::REG, Token::INT32):
     return encode<Reg, i32>(&CodeWriter::write_add);
+  case label(Token::REG, Token::REG):
+    return encode<Reg, Reg>(&CodeWriter::write_add);
 
   default:
     throw "add: invalid dst/src token";
@@ -127,6 +129,10 @@ void Compiler::parse_assign() {
     return encode<Reg, i32>(&CodeWriter::write_assign);
   case label(Token::REG, Token::INT64):
     return encode<Reg, i64>(&CodeWriter::write_assign);
+  case label(Token::REG, Token::MEM64):
+    return encode<Reg, Mem64>(&CodeWriter::write_assign);
+  case label(Token::REG, Token::DATA):
+    return $writer->write_assign($input.read<Reg>(), DataReg{});
 
   default:
     throw "assign: invalid dst/src token";

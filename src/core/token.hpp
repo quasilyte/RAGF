@@ -27,12 +27,16 @@ enum class Token: byte {
 
   //// Context tokens
   NIL,
+  DATA,
+  COUNTER,
 
   // Operand types
   REG,
   INT_REG,
   UINT_REG,
-  MEM,
+  MEM64,
+  MEM32,
+  MEM8,
   INT64,
   INT32,
   INT8,

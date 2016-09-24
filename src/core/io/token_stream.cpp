@@ -27,6 +27,9 @@ template<>
 UintReg TokenStream::read() { return UintReg{read<Reg>()}; }
 
 template<>
+Mem64 TokenStream::read() { return Mem64{read<Reg>()}; }
+
+template<>
 i8 TokenStream::read() { return read_byte(); }
 
 template<>

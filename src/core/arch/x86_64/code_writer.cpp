@@ -32,11 +32,23 @@ void CodeWriter::write_assign(Reg dst, i64 src) {
   else          Mov::write(&$output, dst, src);
 }
 
+void CodeWriter::write_assign(Reg dst, Mem64 src) {
+  Mov::write(&$output, dst, src);
+}
+
+void CodeWriter::write_assign(Reg dst, DataReg) {
+  Mov::write(&$output, dst, rdi);
+}
+
 void CodeWriter::write_add(Reg dst, i32 src) {
   Add::write(&$output, dst, src);
 }
 
 void CodeWriter::write_add(Reg dst, i8 src) {
+  Add::write(&$output, dst, src);
+}
+
+void CodeWriter::write_add(Reg dst, Reg src) {
   Add::write(&$output, dst, src);
 }
 
