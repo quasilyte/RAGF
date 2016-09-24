@@ -15,6 +15,9 @@ run_uint8:
 run_uint16:
 run_uint32:
 run_uint64:
-  call rdi
+  ;; rsi -- code
+  ;; rdi -- data
+  mov r9, rdi
+  call rsi
   mov rax, r8
   ret

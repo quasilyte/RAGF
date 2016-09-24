@@ -7,8 +7,17 @@ def mod dst, a, b
   dst %= b
 end
 
-# There are 8 registers available.
-# They can be referenced in different ways
+# There are 10 registers in total, but only 8 of them are general-purpose.
+# r0-r7 -- general purpose
+# r8    -- counter (can be used only as for-loop inductor)
+# r9    -- data register (immutable pointer)
+# Counter referenced by `cx'
+# Data register referenced by `dx8', `dx32' or `dx64'
+#
+# Note: floating point registers are planned.
+# Most likely, there will be 8 of them (f[0-7])
+
+# General purpose registers can be referenced in different ways
 
 # code      # assembly
 u[0] = 10   # mov   r0, 10
