@@ -21,40 +21,40 @@ class CodeBuf;
   template<class A, class B, class C> \
   static void write(CodeBuf* output, A PARAM1, B PARAM2, C PARAM3)
 
-#define OP0_STUB(NAME) \
+#define OP0_DECL(NAME) \
   struct NAME { \
     static int size(); \
     static void write(CodeBuf*); \
   }
 
-#define OP1_STUB(NAME, PARAM) \
+#define OP1_DECL(NAME, PARAM) \
   struct NAME { SIG1(PARAM); }
 
-#define OP2_STUB(NAME, PARAM1, PARAM2) \
+#define OP2_DECL(NAME, PARAM1, PARAM2) \
   struct NAME { SIG2(PARAM1, PARAM2); }
 
-#define OP3_STUB(NAME, PARAM1, PARAM2, PARAM3) \
+#define OP3_DECL(NAME, PARAM1, PARAM2, PARAM3) \
   struct NAME { SIG3(PARAM1, PARAM2, PARAM3); }
 
-OP0_STUB(Nop);
-OP0_STUB(Ret);
-OP0_STUB(Cqo);
+OP0_DECL(Nop);
+OP0_DECL(Ret);
+OP0_DECL(Cqo);
 
-OP1_STUB(Jne, offset);
-OP1_STUB(Jmp, offset);
-OP1_STUB(Neg, r);
-OP1_STUB(Idiv, divider);
+OP1_DECL(Jne, offset);
+OP1_DECL(Jmp, offset);
+OP1_DECL(Neg, r);
+OP1_DECL(Idiv, divider);
 
-OP2_STUB(Add, dst, src);
-OP2_STUB(Sub, dst, src);
-OP2_STUB(And, dst, src);
-OP2_STUB(Xor, dst, src);
-OP2_STUB(Or, dst, src);
-OP2_STUB(Xchg, a, b);
-OP2_STUB(Cmp, a, b);
-OP2_STUB(Shl, r, count);
-OP2_STUB(Shr, r, count);
-OP2_STUB(Sar, r, count);
+OP2_DECL(Add, dst, src);
+OP2_DECL(Sub, dst, src);
+OP2_DECL(And, dst, src);
+OP2_DECL(Xor, dst, src);
+OP2_DECL(Or, dst, src);
+OP2_DECL(Xchg, a, b);
+OP2_DECL(Cmp, a, b);
+OP2_DECL(Shl, r, count);
+OP2_DECL(Shr, r, count);
+OP2_DECL(Sar, r, count);
 
 struct Imul {
   SIG2(dst, src);
@@ -69,7 +69,7 @@ struct Mov {
 #undef SIG1
 #undef SIG2
 #undef SIG3
-#undef OP0_STUB
-#undef OP1_STUB
-#undef OP2_STUB
-#undef OP3_STUB
+#undef OP0_DECL
+#undef OP1_DECL
+#undef OP2_DECL
+#undef OP3_DECL
