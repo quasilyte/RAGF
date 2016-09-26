@@ -10,6 +10,11 @@ void CodeWriter::write_return() {
   Ret::write(&$output);
 }
 
+void CodeWriter::write_return(Reg r) {
+  Mov::write(&$output, rax, r);
+  Ret::write(&$output);
+}
+
 void CodeWriter::write_swap(Reg a, Reg b) {
   Xchg::write(&$output, a, b);
 }

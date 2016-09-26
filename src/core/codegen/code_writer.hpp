@@ -17,6 +17,8 @@ public:
   Buf get_buf() const noexcept;
 
   virtual void write_return();
+  virtual void write_return(Reg);
+
   virtual void write_neg(Reg);
   virtual void write_swap(Reg, Reg);
 

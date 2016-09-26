@@ -12,7 +12,17 @@ void Compiler::set_writer(CodeWriter* writer) {
 }
 
 void Compiler::parse_return() {
-  $writer->write_return();
+  switch ($input.read<Token>()) {
+  case T1(NIL):
+    return $writer->write_return();
+  case T1(REG):
+    return $writer->write_return($input.read<Reg>());
+
+  default:
+    throw "return: invalid arg token";
+  }
+
+
 }
 
 void Compiler::parse_swap() {
