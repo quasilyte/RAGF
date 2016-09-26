@@ -3,13 +3,13 @@
 #include <core/typedefs.hpp>
 
 struct Reg {
-  constexpr Reg(uint id): $id{id} {}
+  constexpr Reg(byte id): $id{id} {}
 
-  constexpr operator uint() const noexcept {
+  constexpr operator byte() const noexcept {
     return $id;
   }
 
-  uint $id;
+  byte $id;
 };
 
 struct UintReg: Reg {
