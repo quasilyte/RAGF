@@ -12,7 +12,7 @@ T TokenStream::read() {
 
 template<>
 Reg TokenStream::read() {
-  uint id = read_byte();
+  byte id = read_byte();
   if (id > 7) {
     throw "invalid register id";
   }
