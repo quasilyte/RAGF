@@ -17,7 +17,4 @@ run_uint32:
 run_uint64:
   ;; rsi -- code
   ;; rdi -- data
-  mov r9, rdi
-  call rsi
-  mov rax, r8
-  ret
+  jmp rsi
