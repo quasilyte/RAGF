@@ -182,7 +182,7 @@ void Compiler::parse_if() {
 void Compiler::parse_push() {
   int count = $input.read<u8>();
   if (count > 8) {
-    throw "push: count token is too hight (8 is max)";
+    throw "push: count token is too high (8 is max)";
   }
 
   auto bytes = $input.read_bytes(count);
@@ -193,7 +193,7 @@ void Compiler::parse_push() {
 void Compiler::parse_pop() {
   int count = $input.read<u8>();
   if (count > 8) {
-    throw "pop: count token is too hight (8 is max)";
+    throw "pop: count token is too high (8 is max)";
   }
 
   auto bytes = $input.read_bytes(count);
