@@ -44,6 +44,7 @@ OP1_DECL(Jne, offset);
 OP1_DECL(Jmp, offset);
 OP1_DECL(Neg, r);
 OP1_DECL(Idiv, divider);
+OP1_DECL(Call, fn_ptr);
 
 OP2_DECL(Add, dst, src);
 OP2_DECL(Sub, dst, src);

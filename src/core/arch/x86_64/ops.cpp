@@ -303,3 +303,12 @@ void Sar::write(CodeBuf* output, IntReg r, u8 count) {
     });
   }
 }
+
+template<>
+void Call::write(CodeBuf* output, Reg fn_ptr) {
+  output->write(BinaryValue<4>{
+    REX_B,
+    opcode(0xFF),
+    mod_reg_rm(Mod::REG, 2, fn_ptr)
+  });
+}
