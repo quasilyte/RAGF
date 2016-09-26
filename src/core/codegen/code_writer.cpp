@@ -29,6 +29,9 @@ int CodeWriter::write_block() noexcept {
 MOCK(write_return())
 MOCK(write_return(Reg))
 
+MOCK(write_push(const Reg*, int))
+MOCK(write_pop(const Reg*, int))
+
 MOCK(write_swap(Reg, Reg))
 MOCK(write_neg(Reg))
 MOCK(write_assign(Reg, Reg))

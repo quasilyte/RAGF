@@ -179,7 +179,27 @@ void Compiler::parse_if() {
   }
 }
 
+void Compiler::parse_push() {
+  int count = $input.read<u8>();
+  if (count > 8) {
+    throw "push: count token is too hight (8 is max)";
+  }
 
+  auto bytes = $input.read_bytes(count);
+  auto regs = reinterpret_cast<const Reg*>(bytes);
+  $writer->write_push(regs, count);
+}
+
+void Compiler::parse_pop() {
+  int count = $input.read<u8>();
+  if (count > 8) {
+    throw "pop: count token is too hight (8 is max)";
+  }
+
+  auto bytes = $input.read_bytes(count);
+  auto regs = reinterpret_cast<const Reg*>(bytes);
+  $writer->write_pop(regs, count);
+}
 
 void Compiler::parse_if_else() {
   switch ($input.read<u32>()) {
@@ -195,6 +215,8 @@ Buf Compiler::compile() {
   BEGIN_PARSERS;
     TERMINATING_PARSER(end_of_input);
     PARSER(return);
+    PARSER(push);
+    PARSER(pop);
     PARSER(add);
     PARSER(sub);
     PARSER(mul);

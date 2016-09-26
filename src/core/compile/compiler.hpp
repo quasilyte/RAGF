@@ -18,6 +18,8 @@ private:
   CodeWriter* $writer;
 
   void parse_return();
+  void parse_push();
+  void parse_pop();
   void parse_assign();
   void parse_add();
   void parse_sub();

@@ -15,6 +15,20 @@ void CodeWriter::write_return(Reg r) {
   Ret::write(&$output);
 }
 
+void CodeWriter::write_push(const Reg* regs, int count) {
+  auto q = regs + count;
+  while (regs < q) {
+    Push::write(&$output, *regs++);
+  }
+}
+
+void CodeWriter::write_pop(const Reg* regs, int count) {
+  auto q = regs + count;
+  while (regs < q) {
+    Pop::write(&$output, *--q);
+  }
+}
+
 void CodeWriter::write_swap(Reg a, Reg b) {
   Xchg::write(&$output, a, b);
 }

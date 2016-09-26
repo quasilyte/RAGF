@@ -13,6 +13,9 @@ public:
   void write_return() override;
   void write_return(Reg) override;
 
+  void write_push(const Reg*, int count) override;
+  void write_pop(const Reg*, int count) override;
+
   void write_neg(Reg) override;
   void write_swap(Reg, Reg) override;
 

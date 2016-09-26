@@ -19,6 +19,9 @@ public:
   virtual void write_return();
   virtual void write_return(Reg);
 
+  virtual void write_push(const Reg*, int count);
+  virtual void write_pop(const Reg*, int count);
+
   virtual void write_neg(Reg);
   virtual void write_swap(Reg, Reg);
 

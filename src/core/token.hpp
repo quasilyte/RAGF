@@ -9,6 +9,8 @@ enum class Token: byte {
 
   // Operations
   RETURN,
+  PUSH,
+  POP,
   ADD,
   SUB,
   MUL,
