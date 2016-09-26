@@ -312,3 +312,19 @@ void Call::write(CodeBuf* output, Reg fn_ptr) {
     mod_reg_rm(Mod::REG, 2, fn_ptr)
   });
 }
+
+template<>
+void Push::write(CodeBuf* output, Reg r) {
+  output->write(BinaryValue<2>{
+    REX_B,
+    opcode(0x50, r)
+  });
+}
+
+template<>
+void Pop::write(CodeBuf* output, Reg r) {
+  output->write(BinaryValue<2>{
+    REX_B,
+    opcode(0x58, r)
+  });
+}

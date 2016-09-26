@@ -45,6 +45,8 @@ OP1_DECL(Jmp, offset);
 OP1_DECL(Neg, r);
 OP1_DECL(Idiv, divider);
 OP1_DECL(Call, fn_ptr);
+OP1_DECL(Push, r);
+OP1_DECL(Pop, r);
 
 OP2_DECL(Add, dst, src);
 OP2_DECL(Sub, dst, src);
