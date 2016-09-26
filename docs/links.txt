@@ -1,2 +1,5 @@
 x86 instruction encoding
 http://www.c-jump.com/CIS77/CPU/x86/lecture.html
+
+calling conventions
+http://wiki.osdev.org/Calling_Conventions
