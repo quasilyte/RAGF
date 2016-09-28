@@ -38,6 +38,7 @@ MOCK(write_assign(Reg, Reg))
 MOCK(write_assign(Reg, i32))
 MOCK(write_assign(Reg, i64))
 MOCK(write_assign(Reg, Mem64, i8))
+MOCK(write_assign(Mem64, Reg, i8))
 MOCK(write_assign(Reg, DataReg))
 
 MOCK(write_add(Reg, i32))

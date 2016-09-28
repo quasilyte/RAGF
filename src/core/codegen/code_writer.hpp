@@ -29,6 +29,7 @@ public:
   virtual void write_assign(Reg, i64);
   virtual void write_assign(Reg dst, Reg src);
   virtual void write_assign(Reg, Mem64, i8);
+  virtual void write_assign(Mem64, Reg, i8);
   virtual void write_assign(Reg, DataReg);
 
   virtual void write_add(Reg, i8);

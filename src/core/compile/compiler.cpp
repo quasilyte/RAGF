@@ -21,8 +21,6 @@ void Compiler::parse_return() {
   default:
     throw "return: invalid arg token";
   }
-
-
 }
 
 void Compiler::parse_swap() {
@@ -151,6 +149,8 @@ void Compiler::parse_assign() {
     return encode<Reg, i64>(&CodeWriter::write_assign);
   case T2(REG, MEM64):
     return encode<Reg, Mem64, i8>(&CodeWriter::write_assign);
+  case T2(MEM64, REG):
+    return encode<Mem64, Reg, i8>(&CodeWriter::write_assign);
   case T2(REG, DATA):
     return $writer->write_assign($input.read<Reg>(), DataReg{});
 

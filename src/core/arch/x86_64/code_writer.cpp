@@ -55,6 +55,10 @@ void CodeWriter::write_assign(Reg dst, Mem64 src, i8 disp) {
   Mov::write(&$output, dst, src, disp);
 }
 
+void CodeWriter::write_assign(Mem64 dst, Reg src, i8 disp) {
+  Mov::write(&$output, dst, src, disp);
+}
+
 void CodeWriter::write_assign(Reg dst, DataReg) {
   Mov::write(&$output, dst, rdi);
 }

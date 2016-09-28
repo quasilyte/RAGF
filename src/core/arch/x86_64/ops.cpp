@@ -78,6 +78,23 @@ void Mov::write(CodeBuf *output, Reg dst, Mem64 src, i8 disp) {
     });
   }
 }
+template<>
+void Mov::write(CodeBuf *output, Mem64 dst, Reg src, i8 disp) {
+  if (disp == 0) {
+    output->write(BinaryValue<4>{
+      REX_WRB,
+      opcode(0x89),
+      mod_reg_rm(Mod::SIB, src, dst)
+    });
+  } else {
+    output->write(BinaryValue<4>{
+      REX_WRB,
+      opcode(0x89),
+      mod_reg_rm(Mod::DISP1, src, dst),
+      disp
+    });
+  }
+}
 
 template<>
 void Sub::write(CodeBuf* output, Reg dst, i8 src) {
