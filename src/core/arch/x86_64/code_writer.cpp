@@ -3,6 +3,7 @@
 #include <core/arch/x86_64/ops.hpp>
 #include <core/arch/x86_64/gpr_tags.hpp>
 #include <core/compile/compiler.hpp>
+#include <core/codegen/numerics.hpp>
 
 #define CodeWriter x86_64::CodeWriter
 
@@ -41,14 +42,16 @@ void CodeWriter::write_assign(Reg dst, Reg src) {
   Mov::write(&$output, dst, src);
 }
 
-void CodeWriter::write_assign(Reg dst, i32 src) {
-  if (src == 0) Xor::write(&$output, dst, dst);
-  else          Mov::write(&$output, dst, src);
-}
-
 void CodeWriter::write_assign(Reg dst, i64 src) {
-  if (src == 0) Xor::write(&$output, dst, dst);
-  else          Mov::write(&$output, dst, src);
+  if (src == 0) {
+    Xor::write(&$output, dst, dst);
+  }
+  else if (fits_i32(src)) {
+    Mov::write(&$output, dst, (i32)src);
+  }
+  else {
+    Mov::write(&$output, dst, src);
+  }
 }
 
 void CodeWriter::write_assign(Reg dst, Mem64 src, i8 disp) {
@@ -63,12 +66,18 @@ void CodeWriter::write_assign(Reg dst, DataReg) {
   Mov::write(&$output, dst, rdi);
 }
 
-void CodeWriter::write_add(Reg dst, i32 src) {
-  Add::write(&$output, dst, src);
-}
+void CodeWriter::write_add(Reg dst, i64 src) {
+  if (src == 0) return;
 
-void CodeWriter::write_add(Reg dst, i8 src) {
-  Add::write(&$output, dst, src);
+  if (fits_i8(src)) {
+    Add::write(&$output, dst, (i8)src);
+  }
+  else if (fits_i32(src)) {
+    Add::write(&$output, dst, (i32)src);
+  }
+  else {
+    throw "x86_64/add: no support for int64 immediate";
+  }
 }
 
 void CodeWriter::write_add(Reg dst, Reg src) {
@@ -79,12 +88,18 @@ void CodeWriter::write_add(Reg dst, Mem64 src) {
   Add::write(&$output, dst, src);
 }
 
-void CodeWriter::write_sub(Reg dst, i8 src) {
-  Sub::write(&$output, dst, src);
-}
+void CodeWriter::write_sub(Reg dst, i64 src) {
+  if (src == 0) return;
 
-void CodeWriter::write_sub(Reg dst, i32 src) {
-  Sub::write(&$output, dst, src);
+  if (fits_i8(src)) {
+    Sub::write(&$output, dst, (i8)src);
+  }
+  else if (fits_i32(src)) {
+    Sub::write(&$output, dst, (i32)src);
+  }
+  else {
+    throw "x86_64/sub: no support for int64 immediate";
+  }
 }
 
 void CodeWriter::write_sub(Reg dst, Reg src) {

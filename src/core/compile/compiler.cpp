@@ -33,10 +33,8 @@ void Compiler::parse_neg() {
 
 void Compiler::parse_add() {
   switch ($input.read<u16>()) {
-  case T2(REG, INT8):
-    return encode<Reg, i8>(&CodeWriter::write_add);
-  case T2(REG, INT32):
-    return encode<Reg, i32>(&CodeWriter::write_add);
+  case T2(REG, INT):
+    return encode<Reg, i64>(&CodeWriter::write_add);
   case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_add);
   case T2(REG, MEM64):
@@ -49,10 +47,8 @@ void Compiler::parse_add() {
 
 void Compiler::parse_sub() {
   switch ($input.read<u16>()) {
-  case T2(REG, INT8):
-    return encode<Reg, i8>(&CodeWriter::write_sub);
-  case T2(REG, INT32):
-    return encode<Reg, i32>(&CodeWriter::write_sub);
+  case T2(REG, INT):
+    return encode<Reg, i64>(&CodeWriter::write_sub);
   case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_sub);
   case T2(REG, MEM64):
@@ -143,9 +139,7 @@ void Compiler::parse_assign() {
   switch ($input.read<u16>()) {
   case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_assign);
-  case T2(REG, INT32):
-    return encode<Reg, i32>(&CodeWriter::write_assign);
-  case T2(REG, INT64):
+  case T2(REG, INT):
     return encode<Reg, i64>(&CodeWriter::write_assign);
   case T2(REG, MEM64):
     return encode<Reg, Mem64, i8>(&CodeWriter::write_assign);

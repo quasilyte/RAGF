@@ -45,6 +45,7 @@ enum class Token: byte {
   UINT64,
   UINT32,
   UINT8,
+  INT,
 
   // Relation (binary) conditions
   EQ,
