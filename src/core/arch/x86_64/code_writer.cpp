@@ -1,6 +1,6 @@
 #include <core/arch/x86_64/code_writer.hpp>
 
-#include <core/arch/x86_64/ops.hpp>
+#include <core/arch/x86_64/ops/ops.hpp>
 #include <core/arch/x86_64/gpr_tags.hpp>
 #include <core/compile/compiler.hpp>
 #include <core/codegen/numerics.hpp>
@@ -45,11 +45,7 @@ void CodeWriter::write_assign(Reg dst, Reg src) {
 void CodeWriter::write_assign(Reg dst, i64 src) {
   if (src == 0) {
     Xor::write(&$output, dst, dst);
-  }
-  else if (fits_i32(src)) {
-    Mov::write(&$output, dst, (i32)src);
-  }
-  else {
+  } else {
     Mov::write(&$output, dst, src);
   }
 }
@@ -68,16 +64,7 @@ void CodeWriter::write_assign(Reg dst, DataReg) {
 
 void CodeWriter::write_add(Reg dst, i64 src) {
   if (src == 0) return;
-
-  if (fits_i8(src)) {
-    Add::write(&$output, dst, (i8)src);
-  }
-  else if (fits_i32(src)) {
-    Add::write(&$output, dst, (i32)src);
-  }
-  else {
-    throw "x86_64/add: no support for int64 immediate";
-  }
+  Add::write(&$output, dst, src);
 }
 
 void CodeWriter::write_add(Reg dst, Reg src) {
@@ -90,16 +77,7 @@ void CodeWriter::write_add(Reg dst, Mem64 src) {
 
 void CodeWriter::write_sub(Reg dst, i64 src) {
   if (src == 0) return;
-
-  if (fits_i8(src)) {
-    Sub::write(&$output, dst, (i8)src);
-  }
-  else if (fits_i32(src)) {
-    Sub::write(&$output, dst, (i32)src);
-  }
-  else {
-    throw "x86_64/sub: no support for int64 immediate";
-  }
+  Sub::write(&$output, dst, src);
 }
 
 void CodeWriter::write_sub(Reg dst, Reg src) {
