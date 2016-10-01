@@ -37,8 +37,8 @@ void Compiler::parse_add() {
     return encode<Reg, i64>(&CodeWriter::write_add);
   case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_add);
-  case T2(REG, MEM64):
-    return encode<Reg, Mem64>(&CodeWriter::write_add);
+  case T2(REG, MEM):
+    return encode<Reg, Mem>(&CodeWriter::write_add);
 
   default:
     throw "add: invalid dst/src token";
@@ -51,8 +51,8 @@ void Compiler::parse_sub() {
     return encode<Reg, i64>(&CodeWriter::write_sub);
   case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_sub);
-  case T2(REG, MEM64):
-    return encode<Reg, Mem64>(&CodeWriter::write_sub);
+  case T2(REG, MEM):
+    return encode<Reg, Mem>(&CodeWriter::write_sub);
 
   default:
     throw "sub: invalid dst/src token";
@@ -141,10 +141,10 @@ void Compiler::parse_assign() {
     return encode<Reg, Reg>(&CodeWriter::write_assign);
   case T2(REG, INT):
     return encode<Reg, i64>(&CodeWriter::write_assign);
-  case T2(REG, MEM64):
-    return encode<Reg, Mem64, i8>(&CodeWriter::write_assign);
-  case T2(MEM64, REG):
-    return encode<Mem64, Reg, i8>(&CodeWriter::write_assign);
+  case T2(REG, MEM):
+    return encode<Reg, Mem>(&CodeWriter::write_assign);
+  case T2(MEM, REG):
+    return encode<Mem, Reg>(&CodeWriter::write_assign);
   case T2(REG, DATA):
     return $writer->write_assign($input.read<Reg>(), DataReg{});
 

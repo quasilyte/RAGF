@@ -50,12 +50,12 @@ void CodeWriter::write_assign(Reg dst, Imm src) {
   }
 }
 
-void CodeWriter::write_assign(Reg dst, Mem64 src, i8 disp) {
-  Mov::write(&$output, dst, src, disp);
+void CodeWriter::write_assign(Reg dst, Mem src) {
+  Mov::write(&$output, dst, src);
 }
 
-void CodeWriter::write_assign(Mem64 dst, Reg src, i8 disp) {
-  Mov::write(&$output, dst, src, disp);
+void CodeWriter::write_assign(Mem dst, Reg src) {
+  Mov::write(&$output, dst, src);
 }
 
 void CodeWriter::write_assign(Reg dst, DataReg) {
@@ -71,11 +71,11 @@ void CodeWriter::write_add(Reg dst, Reg src) {
   Add::write(&$output, dst, src);
 }
 
-void CodeWriter::write_add(Reg dst, Mem64 src) {
+void CodeWriter::write_add(Reg dst, Mem src) {
   Add::write(&$output, dst, src);
 }
 
-void CodeWriter::write_sub(Reg dst, i64 src) {
+void CodeWriter::write_sub(Reg dst, Imm src) {
   if (src == 0) return;
   Sub::write(&$output, dst, src);
 }
@@ -84,7 +84,7 @@ void CodeWriter::write_sub(Reg dst, Reg src) {
   Sub::write(&$output, dst, src);
 }
 
-void CodeWriter::write_sub(Reg dst, Mem64 src) {
+void CodeWriter::write_sub(Reg dst, Mem src) {
   Sub::write(&$output, dst, src);
 }
 

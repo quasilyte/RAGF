@@ -36,9 +36,7 @@ enum class Token: byte {
   REG,
   INT_REG,
   UINT_REG,
-  MEM64,
-  MEM32,
-  MEM8,
+  MEM,
   INT,
   UINT,
 

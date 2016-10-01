@@ -3,6 +3,7 @@
 #include <core/io/code_buf.hpp>
 #include <core/reg.hpp>
 #include <core/special_tags.hpp>
+#include <core/mem.hpp>
 
 class Compiler;
 
@@ -29,20 +30,19 @@ public:
 
   virtual void write_assign(Reg, Imm);
   virtual void write_assign(Reg dst, Reg src);
-  virtual void write_assign(Reg, Mem64, i8);
-  virtual void write_assign(Mem64, Reg, i8);
+  virtual void write_assign(Reg, Mem);
+  virtual void write_assign(Mem, Reg);
   virtual void write_assign(Reg, DataReg);
 
   virtual void write_add(Reg, Imm);
   virtual void write_add(Reg, Reg);
-  virtual void write_add(Reg, Mem64);
+  virtual void write_add(Reg, Mem);
 
   virtual void write_sub(Reg, Imm);
   virtual void write_sub(Reg, Reg);
-  virtual void write_sub(Reg, Mem64);
+  virtual void write_sub(Reg, Mem);
 
   virtual void write_mul(IntReg, Imm);
-  virtual void write_mul(IntReg, i8);
   virtual void write_mul(IntReg, IntReg);
 
   virtual void write_div(IntReg, IntReg);

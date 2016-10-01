@@ -1,5 +1,7 @@
 #include <core/io/token_stream.hpp>
 
+#include <core/mem.hpp>
+
 TokenStream::TokenStream(const byte* input):
 $pos{input} {}
 
@@ -34,6 +36,14 @@ i8 TokenStream::read() { return read_byte(); }
 
 template<>
 u8 TokenStream::read() { return read_byte(); }
+
+template<>
+Mem TokenStream::read() {
+  Reg r = read<Reg>();
+  int byte_count = read<i8>();
+  int index = read<i32>();
+  return Mem{r, byte_count, index};
+}
 
 byte TokenStream::read_byte() noexcept {
   return *($pos++);

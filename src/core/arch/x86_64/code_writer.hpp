@@ -19,19 +19,19 @@ public:
   void write_neg(Reg) override;
   void write_swap(Reg, Reg) override;
 
-  void write_assign(Reg, i64) override;
+  void write_assign(Reg, Imm) override;
   void write_assign(Reg dst, Reg src) override;
-  void write_assign(Reg, Mem64, i8) override;
-  void write_assign(Mem64, Reg, i8) override;
+  void write_assign(Reg dst, Mem src) override;
+  void write_assign(Mem dst, Reg src) override;
   void write_assign(Reg, DataReg) override;
 
   void write_add(Reg, Imm) override;
   void write_add(Reg, Reg) override;
-  void write_add(Reg, Mem64) override;
+  void write_add(Reg, Mem) override;
 
   void write_sub(Reg, Imm) override;
   void write_sub(Reg, Reg) override;
-  void write_sub(Reg, Mem64) override;
+  void write_sub(Reg, Mem) override;
 
   void write_mul(IntReg, Imm) override;
   void write_mul(IntReg, IntReg) override;
