@@ -22,5 +22,3 @@ void Xchg::write(CodeBuf* output, Reg a, Reg b) {
     mod_reg_rm(Mod::REG, a, b)
   });
 }
-
-
