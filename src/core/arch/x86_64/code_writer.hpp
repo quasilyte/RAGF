@@ -17,7 +17,9 @@ public:
   void write_pop(const Reg*, int count) override;
 
   void write_neg(Reg) override;
+
   void write_swap(Reg, Reg) override;
+  void write_swap(Mem, Mem) override;
 
   void write_assign(Reg, Imm) override;
   void write_assign(Reg dst, Reg src) override;

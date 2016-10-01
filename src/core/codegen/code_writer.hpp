@@ -26,7 +26,9 @@ public:
   virtual void write_pop(const Reg*, int count);
 
   virtual void write_neg(Reg);
+
   virtual void write_swap(Reg, Reg);
+  virtual void write_swap(Mem, Mem);
 
   virtual void write_assign(Reg, Imm);
   virtual void write_assign(Reg dst, Reg src);

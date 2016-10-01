@@ -25,7 +25,13 @@ void Compiler::parse_return() {
 }
 
 void Compiler::parse_swap() {
-  encode<Reg, Reg>(&CodeWriter::write_swap);
+  switch ($input.read<u16>()) {
+  case T2(INT_REG, INT_REG):
+  case T2(UINT_REG, UINT_REG):
+    return encode<Reg, Reg>(&CodeWriter::write_swap);
+  case T2(MEM, MEM):
+    return encode<Mem, Mem>(&CodeWriter::write_swap);
+  }
 }
 
 void Compiler::parse_neg() {

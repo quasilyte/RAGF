@@ -33,6 +33,8 @@ MOCK(write_push(const Reg*, int))
 MOCK(write_pop(const Reg*, int))
 
 MOCK(write_swap(Reg, Reg))
+MOCK(write_swap(Mem, Mem))
+
 MOCK(write_neg(Reg))
 
 MOCK(write_assign(Reg, Reg))

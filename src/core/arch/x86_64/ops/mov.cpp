@@ -16,6 +16,60 @@ void Mov::write(CodeBuf* output, Gpr dst, Reg src) {
 }
 
 template<>
+void Mov::write(CodeBuf* output, Gpr dst, Mem src) {
+  if (src.byte_count == 8) {
+    if (src.disp() == 0) {
+      output->write(BinaryValue<4>{
+        REX_WB,
+        opcode(0x8B),
+        mod_reg_rm(Mod::SIB, dst, src.ptr)
+      });
+    }
+    else if (fits_i8(src.disp())) {
+      output->write(BinaryValue<4>{
+        REX_WB,
+        opcode(0x8B),
+        mod_reg_rm(Mod::DISP1, dst, src.ptr),
+        (i8)src.disp()
+      });
+    }
+    else {
+      throw "mov: invalid displacement";
+    }
+  }
+  else {
+    throw "mov: invalid memory cell size";
+  }
+}
+
+template<>
+void Mov::write(CodeBuf* output, Mem dst, Gpr src) {
+  if (dst.byte_count == 8) {
+    if (dst.disp() == 0) {
+      output->write(BinaryValue<4>{
+        REX_WB,
+        opcode(0x89),
+        mod_reg_rm(Mod::SIB, dst.ptr, src)
+      });
+    }
+    else if (fits_i8(dst.disp())) {
+      output->write(BinaryValue<4>{
+        REX_WB,
+        opcode(0x89),
+        mod_reg_rm(Mod::DISP1, src, dst.ptr),
+        (i8)dst.disp()
+      });
+    }
+    else {
+      throw "mov: invalid displacement";
+    }
+  }
+  else {
+    throw "mov: invalid memory cell size";
+  }
+}
+
+template<>
 void Mov::write(CodeBuf* output, Reg dst, Gpr src) {
   output->write(BinaryValue<4>{
     REX_WB,

@@ -34,6 +34,13 @@ void CodeWriter::write_swap(Reg a, Reg b) {
   Xchg::write(&$output, a, b);
 }
 
+void CodeWriter::write_swap(Mem a, Mem b) {
+  Mov::write(&$output, rax, a);
+  Mov::write(&$output, rcx, b);
+  Mov::write(&$output, a, rax);
+  Mov::write(&$output, b, rcx);
+}
+
 void CodeWriter::write_neg(Reg r) {
   Neg::write(&$output, r);
 }
