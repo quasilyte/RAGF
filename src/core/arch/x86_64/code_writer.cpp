@@ -6,7 +6,7 @@
 #include <core/codegen/numerics.hpp>
 
 #define CodeWriter x86_64::CodeWriter
-#include <cstdio>
+
 void CodeWriter::write_return() {
   Ret::write(&$output);
 }
