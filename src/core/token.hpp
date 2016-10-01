@@ -39,13 +39,9 @@ enum class Token: byte {
   MEM64,
   MEM32,
   MEM8,
-  INT64,
-  INT32,
   INT8,
-  UINT64,
-  UINT32,
-  UINT8,
   INT,
+  UINT,
 
   // Relation (binary) conditions
   EQ,
