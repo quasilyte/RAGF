@@ -10,10 +10,18 @@ set(
   compile/compiler.cpp
   compile/compile.cpp
   arch/x86_64/code_writer.cpp
-  arch/x86_64/ops/ops.cpp
   arch/x86_64/ops/add.cpp
   arch/x86_64/ops/sub.cpp
   arch/x86_64/ops/mov.cpp
+  arch/x86_64/ops/cmp.cpp
+  arch/x86_64/ops/mul_ops.cpp
+  arch/x86_64/ops/div_ops.cpp
+  arch/x86_64/ops/stack_ops.cpp
+  arch/x86_64/ops/shift_ops.cpp
+  arch/x86_64/ops/jmp_ops.cpp
+  arch/x86_64/ops/bitwise_ops.cpp
+  arch/x86_64/ops/fn_ops.cpp
+  arch/x86_64/ops/misc_ops.cpp
 )
 
 add_library(ragf_core STATIC ${ragf_core_src})
