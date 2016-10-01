@@ -25,15 +25,15 @@ public:
   void write_assign(Mem64, Reg, i8) override;
   void write_assign(Reg, DataReg) override;
 
-  void write_add(Reg, i64) override;
+  void write_add(Reg, Imm) override;
   void write_add(Reg, Reg) override;
   void write_add(Reg, Mem64) override;
 
-  void write_sub(Reg, i64) override;
+  void write_sub(Reg, Imm) override;
   void write_sub(Reg, Reg) override;
   void write_sub(Reg, Mem64) override;
 
-  void write_mul(IntReg, i8) override;
+  void write_mul(IntReg, Imm) override;
   void write_mul(IntReg, IntReg) override;
 
   void write_div(IntReg, IntReg) override;
@@ -50,8 +50,8 @@ public:
   void write_shift_right(UintReg, u8 count) override;
   void write_shift_right(IntReg, u8 count) override;
 
-  void write_while_neq(Reg, i8) override;
+  void write_while_neq(Reg, Imm) override;
 
-  void write_if_eq(Reg, i8) override;
-  void write_if_else_eq(Reg, i8) override;
+  void write_if_eq(Reg, Imm) override;
+  void write_if_else_eq(Reg, Imm) override;
 };

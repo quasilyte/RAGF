@@ -6,6 +6,8 @@
 
 class Compiler;
 
+typedef i64 Imm;
+
 class CodeWriter {
 public:
   CodeWriter(CodeBuf);
@@ -25,20 +27,21 @@ public:
   virtual void write_neg(Reg);
   virtual void write_swap(Reg, Reg);
 
-  virtual void write_assign(Reg, i64);
+  virtual void write_assign(Reg, Imm);
   virtual void write_assign(Reg dst, Reg src);
   virtual void write_assign(Reg, Mem64, i8);
   virtual void write_assign(Mem64, Reg, i8);
   virtual void write_assign(Reg, DataReg);
 
-  virtual void write_add(Reg, i64);
+  virtual void write_add(Reg, Imm);
   virtual void write_add(Reg, Reg);
   virtual void write_add(Reg, Mem64);
 
-  virtual void write_sub(Reg, i64);
+  virtual void write_sub(Reg, Imm);
   virtual void write_sub(Reg, Reg);
   virtual void write_sub(Reg, Mem64);
 
+  virtual void write_mul(IntReg, Imm);
   virtual void write_mul(IntReg, i8);
   virtual void write_mul(IntReg, IntReg);
 
@@ -56,10 +59,10 @@ public:
   virtual void write_shift_right(UintReg, u8 count);
   virtual void write_shift_right(IntReg, u8 count);
 
-  virtual void write_while_neq(Reg, i8);
+  virtual void write_while_neq(Reg, Imm);
 
-  virtual void write_if_eq(Reg, i8);
-  virtual void write_if_else_eq(Reg, i8);
+  virtual void write_if_eq(Reg, Imm);
+  virtual void write_if_else_eq(Reg, Imm);
 
 protected:
   Compiler* $compiler;

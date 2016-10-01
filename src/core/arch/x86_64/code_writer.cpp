@@ -6,7 +6,7 @@
 #include <core/codegen/numerics.hpp>
 
 #define CodeWriter x86_64::CodeWriter
-
+#include <cstdio>
 void CodeWriter::write_return() {
   Ret::write(&$output);
 }
@@ -42,7 +42,7 @@ void CodeWriter::write_assign(Reg dst, Reg src) {
   Mov::write(&$output, dst, src);
 }
 
-void CodeWriter::write_assign(Reg dst, i64 src) {
+void CodeWriter::write_assign(Reg dst, Imm src) {
   if (src == 0) {
     Xor::write(&$output, dst, dst);
   } else {
@@ -62,7 +62,7 @@ void CodeWriter::write_assign(Reg dst, DataReg) {
   Mov::write(&$output, dst, rdi);
 }
 
-void CodeWriter::write_add(Reg dst, i64 src) {
+void CodeWriter::write_add(Reg dst, Imm src) {
   if (src == 0) return;
   Add::write(&$output, dst, src);
 }
@@ -88,7 +88,7 @@ void CodeWriter::write_sub(Reg dst, Mem64 src) {
   Sub::write(&$output, dst, src);
 }
 
-void CodeWriter::write_mul(IntReg dst, i8 src) {
+void CodeWriter::write_mul(IntReg dst, Imm src) {
   Imul::write(&$output, dst, dst, src);
 }
 
@@ -136,7 +136,7 @@ void CodeWriter::write_shift_right(IntReg r, u8 count) {
   Sar::write(&$output, r, count);
 }
 
-void CodeWriter::write_while_neq(Reg a, i8 b) {
+void CodeWriter::write_while_neq(Reg a, Imm b) {
   auto jmp_block = $output.preserve(Jmp::size(i32{}));
   int body_size = write_block();
   Jmp::write(jmp_block, body_size);
@@ -145,7 +145,7 @@ void CodeWriter::write_while_neq(Reg a, i8 b) {
   Jne::write(&$output, -(body_size + Jne::size(i32{}) + Cmp::size(a, b)));
 }
 
-void CodeWriter::write_if_eq(Reg a, i8 b) {
+void CodeWriter::write_if_eq(Reg a, Imm b) {
   Cmp::write(&$output, a, b);
 
   auto jne_block = $output.preserve(Jne::size(i32{}));
@@ -153,7 +153,7 @@ void CodeWriter::write_if_eq(Reg a, i8 b) {
   Jne::write(jne_block, on_true_size);
 }
 
-void CodeWriter::write_if_else_eq(Reg a, i8 b) {
+void CodeWriter::write_if_else_eq(Reg a, Imm b) {
   Cmp::write(&$output, a, b);
 
   auto jne_block = $output.preserve(Jne::size(i32{}));

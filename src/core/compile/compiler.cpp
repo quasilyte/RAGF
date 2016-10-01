@@ -61,8 +61,8 @@ void Compiler::parse_sub() {
 
 void Compiler::parse_mul() {
   switch ($input.read<u16>()) {
-  case T2(INT_REG, INT8):
-    return encode<IntReg, i8>(&CodeWriter::write_mul);
+  case T2(INT_REG, INT):
+    return encode<IntReg, Imm>(&CodeWriter::write_mul);
   case T2(INT_REG, INT_REG):
     return encode<IntReg, IntReg>(&CodeWriter::write_mul);
 
@@ -155,8 +155,8 @@ void Compiler::parse_assign() {
 
 void Compiler::parse_while() {
   switch ($input.read<u32>()) {
-  case T4(NEQ, REG, INT8, NIL):
-    return encode<Reg, i8>(&CodeWriter::write_while_neq);
+  case T4(NEQ, REG, INT, NIL):
+    return encode<Reg, Imm>(&CodeWriter::write_while_neq);
 
   default:
     throw "while: invalid header tokens";
@@ -165,8 +165,8 @@ void Compiler::parse_while() {
 
 void Compiler::parse_if() {
   switch ($input.read<u32>()) {
-  case T4(EQ, REG, INT8, NIL):
-    return encode<Reg, i8>(&CodeWriter::write_if_eq);
+  case T4(EQ, REG, INT, NIL):
+    return encode<Reg, Imm>(&CodeWriter::write_if_eq);
 
   default:
     throw "if: invalid header tokens";
@@ -197,8 +197,8 @@ void Compiler::parse_pop() {
 
 void Compiler::parse_if_else() {
   switch ($input.read<u32>()) {
-  case T4(EQ, REG, INT8, NIL):
-    return encode<Reg, i8>(&CodeWriter::write_if_else_eq);
+  case T4(EQ, REG, INT, NIL):
+    return encode<Reg, Imm>(&CodeWriter::write_if_else_eq);
 
   default:
     throw "if/else: invalid header tokens";

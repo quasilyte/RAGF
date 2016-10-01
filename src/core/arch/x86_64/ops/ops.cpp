@@ -49,13 +49,18 @@ void Or::write(CodeBuf* output, Reg dst, Reg src) {
 }
 
 template<>
-void Imul::write(CodeBuf* output, IntReg dst, IntReg a, i8 src) {
-  output->write(BinaryValue<4>{
-    REX_WRB,
-    opcode(0x6B),
-    mod_reg_rm(Mod::REG, dst, a),
-    src
-  });
+void Imul::write(CodeBuf* output, IntReg dst, IntReg a, i64 src) {
+  if (fits_i8(src)) {
+    output->write(BinaryValue<4>{
+      REX_WRB,
+      opcode(0x6B),
+      mod_reg_rm(Mod::REG, dst, a),
+      (i8)src
+    });
+  }
+  else {
+    throw "imul: only 8 bit immediates are implemented";
+  }
 }
 template<>
 void Imul::write(CodeBuf* output, IntReg dst, IntReg src) {
@@ -111,15 +116,36 @@ void Xchg::write(CodeBuf* output, Reg a, Reg b) {
   });
 }
 
-template<> int Cmp::size(Reg, i8) { return 4; }
+template<> int Cmp::size(Reg, i64 imm) {
+  switch (min_width(imm)) {
+  case Size::BYTE: return 4;
+  case Size::WORD:
+  case Size::DWORD: return 7;
+  default: return -1;
+  }
+}
+
 template<>
-void Cmp::write(CodeBuf* output, Reg a, i8 b) {
-  output->write(BinaryValue<4>{
-    REX_WB,
-    opcode(0x83),
-    mod_reg_rm(Mod::REG, 7, a),
-    b
-  });
+void Cmp::write(CodeBuf* output, Reg a, i64 b) {
+  if (fits_i8(b)) {
+    output->write(BinaryValue<4>{
+      REX_WB,
+      opcode(0x83),
+      mod_reg_rm(Mod::REG, 7, a),
+      (i8)b
+    });
+  }
+  else if (fits_i32(b)) {
+    output->write(BinaryValue<8>{
+      REX_WB,
+      opcode(0x81),
+      mod_reg_rm(Mod::REG, 7, a),
+      (i32)b
+    });
+  }
+  else {
+    throw "cmp: only {8,32} bit immediates are implemented";
+  }
 }
 
 template<>

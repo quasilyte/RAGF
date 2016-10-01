@@ -40,14 +40,15 @@ MOCK(write_assign(Reg, Mem64, i8))
 MOCK(write_assign(Mem64, Reg, i8))
 MOCK(write_assign(Reg, DataReg))
 
-MOCK(write_add(Reg, i64))
+MOCK(write_add(Reg, Imm))
 MOCK(write_add(Reg, Reg))
 MOCK(write_add(Reg, Mem64))
 
-MOCK(write_sub(Reg, i64))
+MOCK(write_sub(Reg, Imm))
 MOCK(write_sub(Reg, Reg))
 MOCK(write_sub(Reg, Mem64))
 
+MOCK(write_mul(IntReg, Imm))
 MOCK(write_mul(IntReg, i8))
 MOCK(write_mul(IntReg, IntReg))
 
@@ -59,6 +60,8 @@ MOCK(write_shift_right(UintReg, u8))
 MOCK(write_shift_right(IntReg, u8))
 MOCK(write_bit_and(Reg, Reg))
 MOCK(write_bit_or(Reg, Reg))
-MOCK(write_while_neq(Reg, i8))
-MOCK(write_if_eq(Reg, i8))
-MOCK(write_if_else_eq(Reg, i8))
+
+MOCK(write_while_neq(Reg, Imm))
+
+MOCK(write_if_eq(Reg, Imm))
+MOCK(write_if_else_eq(Reg, Imm))
