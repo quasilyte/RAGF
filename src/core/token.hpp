@@ -33,7 +33,6 @@ enum class Token: byte {
   COUNTER,
 
   // Operand types
-  REG,
   INT_REG,
   UINT_REG,
   MEM,
