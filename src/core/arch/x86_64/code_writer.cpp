@@ -37,8 +37,8 @@ void CodeWriter::write_swap(Reg a, Reg b) {
 void CodeWriter::write_swap(Mem a, Mem b) {
   Mov::write(&$output, rax, a);
   Mov::write(&$output, rcx, b);
-  Mov::write(&$output, a, rax);
-  Mov::write(&$output, b, rcx);
+  Mov::write(&$output, a, rcx);
+  Mov::write(&$output, b, rax);
 }
 
 void CodeWriter::write_neg(Reg r) {

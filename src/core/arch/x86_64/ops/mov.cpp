@@ -49,7 +49,7 @@ void Mov::write(CodeBuf* output, Mem dst, Gpr src) {
       output->write(BinaryValue<4>{
         REX_WB,
         opcode(0x89),
-        mod_reg_rm(Mod::SIB, dst.ptr, src)
+        mod_reg_rm(Mod::SIB, src, dst.ptr)
       });
     }
     else if (fits_i8(dst.disp())) {
@@ -156,23 +156,5 @@ void Mov::write(CodeBuf* output, Reg dst, Mem src) {
   }
   else {
     throw "mov: invalid memory cell size";
-  }
-}
-
-template<>
-void Mov::write(CodeBuf* output, Mem64 dst, Reg src, i8 disp) {
-  if (disp == 0) {
-    output->write(BinaryValue<4>{
-      REX_WRB,
-      opcode(0x89),
-      mod_reg_rm(Mod::SIB, src, dst)
-    });
-  } else {
-    output->write(BinaryValue<4>{
-      REX_WRB,
-      opcode(0x89),
-      mod_reg_rm(Mod::DISP1, src, dst),
-      disp
-    });
   }
 }
