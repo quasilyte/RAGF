@@ -16,7 +16,7 @@ typedef uint16_t u16;
 typedef uint64_t u64;
 typedef uint32_t u32;
 
-typedef float f32;
+typedef float  f32;
 typedef double f64;
 
 typedef u8 byte;
