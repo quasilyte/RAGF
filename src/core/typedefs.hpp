@@ -1,5 +1,10 @@
 #pragma once
 
+/*!
+ * @file
+ * @brief Project-wide typedefs for common types
+ */
+
 #include <cstdint>
 
 #include <c_api/buf.h>

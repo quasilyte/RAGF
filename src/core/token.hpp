@@ -2,11 +2,12 @@
 
 #include <core/typedefs.hpp>
 
+/*!
+ * @brief Binary tokens enum
+ */
 enum class Token: byte {
-  //// Top level tokens
   // Special token
   END,
-
   // Operations
   RETURN,
   PUSH,
@@ -27,7 +28,6 @@ enum class Token: byte {
   IF,
   IF_ELSE,
 
-  //// Context tokens
   NIL,
   DATA,
   COUNTER,

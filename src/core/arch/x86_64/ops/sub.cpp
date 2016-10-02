@@ -38,15 +38,6 @@ void Sub::write(CodeBuf* output, Reg dst, Reg src) {
 }
 
 template<>
-void Sub::write(CodeBuf* output, Reg dst, Mem64 src) {
-  output->write(BinaryValue<4>{
-    REX_WRB,
-    opcode(0x2B),
-    mod_reg_rm(Mod::SIB, dst, src)
-  });
-}
-
-template<>
 void Sub::write(CodeBuf* output, Reg dst, Mem src) {
   if (src.byte_count == 8) {
     if (src.disp() == 0) {
