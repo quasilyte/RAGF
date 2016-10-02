@@ -1,12 +1,18 @@
 #pragma once
 
+/*!
+ * @file
+ * Utility finctions to work with numerics
+ */
+
 #include <core/typedefs.hpp>
 
+//! @brief Enum representing actual size needed to store numeric value
 enum class Size {
-  BYTE,
-  WORD,
-  DWORD,
-  QWORD
+  BYTE,  // 1 byte
+  WORD,  // 2 bytes
+  DWORD, // 4 bytes
+  QWORD  // 8 bytes
 };
 
 bool fits_i8(i64) noexcept;

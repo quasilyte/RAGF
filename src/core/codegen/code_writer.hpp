@@ -9,6 +9,11 @@ class Compiler;
 
 typedef i64 Imm;
 
+/*!
+ * @brief Class responsible for machine code generation
+ * Depending on the actual underlying type, yields
+ * machine code for specific arhitecture.
+ */
 class CodeWriter {
 public:
   CodeWriter(CodeBuf);

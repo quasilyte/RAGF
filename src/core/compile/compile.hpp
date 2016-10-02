@@ -2,4 +2,5 @@
 
 #include <core/typedefs.hpp>
 
-Buf compile_i86_64(const byte* code);
+//! @brief Generate x86_64 machine code from binary input
+Buf compile_x86_64(const byte* binary_tokens);

@@ -1,5 +1,14 @@
 #pragma once
 
+/*!
+ * @file
+ * "parsers" macro are used to generate
+ * efficient executor for compiling binary tokens.
+ * It uses threaded dispatching which is common in many
+ * interpreters + special technique of jump table
+ * initialization
+ */
+
 // Read next token and execute associated parser
 #define PARSE_NEXT \
   goto *parsers__[static_cast<int>($input.read<Token>())]

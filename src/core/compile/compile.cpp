@@ -9,8 +9,8 @@
 
 #include <cstdlib>
 
-Buf compile_i86_64(const byte* input) {
-  TokenStream tokens{input};
+Buf compile_x86_64(const byte* binary_tokens) {
+  TokenStream tokens{binary_tokens};
 
   CodeBuf output{Buf{static_cast<byte*>(calloc(64, 1)), 64}};
   x86_64::CodeWriter writer{output};
