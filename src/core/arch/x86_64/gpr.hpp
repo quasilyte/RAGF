@@ -1,13 +1,14 @@
 #pragma once
 
-#include <core/typedefs.hpp>
+#include <core/reg.hpp>
 
-struct Gpr {
-  constexpr Gpr(uint id): $id{id} {}
-
-  constexpr operator uint() const noexcept {
-    return $id;
-  }
-
-  uint $id;
+/*!
+ * @brief Untyped general purpose register
+ * Represents special register that can not be
+ * accessed directly from the Ragf API.
+ * GPRs are used for intermediate results and other
+ * bookkeeping tasks
+ */
+struct Gpr: Reg {
+  using Reg::Reg;
 };

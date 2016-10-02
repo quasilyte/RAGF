@@ -1,7 +1,6 @@
 #include <core/arch/x86_64/code_writer.hpp>
 
 #include <core/arch/x86_64/ops/ops.hpp>
-#include <core/arch/x86_64/gpr_tags.hpp>
 #include <core/compile/compiler.hpp>
 #include <core/codegen/numerics.hpp>
 

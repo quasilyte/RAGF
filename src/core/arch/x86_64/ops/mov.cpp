@@ -2,7 +2,6 @@
 
 #include <core/io/code_buf.hpp>
 #include <core/arch/x86_64/encode.hpp>
-#include <core/arch/x86_64/gpr_tags.hpp>
 #include <core/codegen/numerics.hpp>
 #include <core/mem.hpp>
 
