@@ -1,13 +1,9 @@
 #pragma once
 
 #include <core/io/code_buf.hpp>
-#include <core/reg.hpp>
-#include <core/special_tags.hpp>
-#include <core/mem.hpp>
+#include <core/args.hpp>
 
 class Compiler;
-
-typedef i64 Imm;
 
 /*!
  * @brief Class responsible for machine code generation

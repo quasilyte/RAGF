@@ -2,7 +2,7 @@
 
 #include <core/typedefs.hpp>
 #include <core/token.hpp>
-#include <core/reg.hpp>
+#include <core/args.hpp>
 
 /*!
  * @brief Binary token stream reader

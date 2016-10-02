@@ -3,7 +3,6 @@
 #include <core/io/code_buf.hpp>
 #include <core/arch/x86_64/encode.hpp>
 #include <core/codegen/numerics.hpp>
-#include <core/mem.hpp>
 
 template<>
 void Sub::write(CodeBuf* output, Reg dst, i64 src) {

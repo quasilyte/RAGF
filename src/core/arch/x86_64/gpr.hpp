@@ -1,6 +1,6 @@
 #pragma once
 
-#include <core/reg.hpp>
+#include <core/args.hpp>
 
 /*!
  * @brief Untyped general purpose register

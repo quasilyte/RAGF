@@ -6,7 +6,7 @@
  */
 
 #include <core/typedefs.hpp>
-#include <core/reg.hpp>
+#include <core/args.hpp>
 
 //! @brief REX prefix from single value
 constexpr byte rex(uint val) noexcept {

@@ -1,7 +1,7 @@
 #pragma once
 
 #include <core/typedefs.hpp>
-#include <core/reg.hpp>
+#include <core/args.hpp>
 #include <core/arch/x86_64/constants.hpp>
 
 class CodeBuf;

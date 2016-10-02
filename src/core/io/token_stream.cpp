@@ -1,6 +1,6 @@
 #include <core/io/token_stream.hpp>
 
-#include <core/mem.hpp>
+#include <core/args.hpp>
 
 TokenStream::TokenStream(const byte* input):
 $pos{input} {}
