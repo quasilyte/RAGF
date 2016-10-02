@@ -1,9 +1,7 @@
 #+CAPTION: compiler tasks
 | Task                                          | Priority |
 |-----------------------------------------------+----------|
-| Infer best fit immediate size inside compiler | 5/5      |
 | Nice C++ wrappers around cstdlib              | 4/5      |
-| Memory ops                                    | 4/5      |
 | For loops                                     | 4/5      |
 | Composite types model                         | 4/5      |
 | Align jmp labels for loops and if/else        | 3/5      |
