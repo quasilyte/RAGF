@@ -16,14 +16,14 @@ const byte REX_WB  = 0b01001001; // 49
 const byte REX_WRB = 0b01001101; // 4d
 const byte REX_WR  = 0b01001100; // 4c
 
-const Gpr rax{0};
-const Gpr rcx{1};
-const Gpr rdx{2};
-const Gpr rbx{3};
-const Gpr rsp{4};
-const Gpr rbp{5};
-const Gpr rsi{6}; // Used to pass code
-const Gpr rdi{7}; // Used to pass data
+const Gpr RAX{0};
+const Gpr RCX{1};
+const Gpr RDX{2};
+const Gpr RBX{3};
+const Gpr RSP{4};
+const Gpr RBP{5};
+const Gpr RSI{6}; // Used to pass code
+const Gpr RDI{7}; // Used to pass data
 
 //! @brief MOD constants holder (part of MOD REG R/M)
 struct Mod {

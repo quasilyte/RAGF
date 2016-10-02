@@ -11,7 +11,7 @@ void CodeWriter::write_return() {
 }
 
 void CodeWriter::write_return(Reg r) {
-  Mov::write(&$output, rax, r);
+  Mov::write(&$output, RAX, r);
   Ret::write(&$output);
 }
 
@@ -34,10 +34,10 @@ void CodeWriter::write_swap(Reg a, Reg b) {
 }
 
 void CodeWriter::write_swap(Mem a, Mem b) {
-  Mov::write(&$output, rax, a);
-  Mov::write(&$output, rcx, b);
-  Mov::write(&$output, a, rcx);
-  Mov::write(&$output, b, rax);
+  Mov::write(&$output, RAX, a);
+  Mov::write(&$output, RCX, b);
+  Mov::write(&$output, a, RCX);
+  Mov::write(&$output, b, RAX);
 }
 
 void CodeWriter::write_neg(Reg r) {
@@ -65,7 +65,7 @@ void CodeWriter::write_assign(Mem dst, Reg src) {
 }
 
 void CodeWriter::write_assign(Reg dst, DataReg) {
-  Mov::write(&$output, dst, rdi);
+  Mov::write(&$output, dst, RDI);
 }
 
 void CodeWriter::write_add(Reg dst, Imm src) {
@@ -103,18 +103,18 @@ void CodeWriter::write_mul(IntReg dst, IntReg src) {
 }
 
 void CodeWriter::write_div(IntReg dst, IntReg src) {
-  Mov::write(&$output, rax, Reg{dst});
+  Mov::write(&$output, RAX, Reg{dst});
   Cqo::write(&$output);
   Idiv::write(&$output, src);
-  Mov::write(&$output, Reg{dst}, rax);
+  Mov::write(&$output, Reg{dst}, RAX);
 }
 
 void CodeWriter::write_mod(IntReg dst, IntReg src) {
   // Like div, but uses `rdx' idiv result, instead of `rax'
-  Mov::write(&$output, rax, Reg{dst});
+  Mov::write(&$output, RAX, Reg{dst});
   Cqo::write(&$output);
   Idiv::write(&$output, src);
-  Mov::write(&$output, Reg{dst}, rdx);
+  Mov::write(&$output, Reg{dst}, RDX);
 }
 
 void CodeWriter::write_bit_and(Reg dst, Reg src) {
