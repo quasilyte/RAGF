@@ -19,7 +19,3 @@ struct UintReg: Reg {
 struct IntReg: Reg {
   using Reg::Reg;
 };
-
-struct Mem64: Reg {
-  using Reg::Reg;
-};
