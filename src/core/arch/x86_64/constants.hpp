@@ -1,5 +1,10 @@
 #pragma once
 
+/*!
+ * @file
+ * Important constants for machine code generation
+ */
+
 #include <core/typedefs.hpp>
 #include <core/arch/x86_64/gpr.hpp>
 
@@ -20,6 +25,7 @@ const Gpr rbp{5};
 const Gpr rsi{6}; // Used to pass code
 const Gpr rdi{7}; // Used to pass data
 
+//! @brief MOD constants holder (part of MOD REG R/M)
 struct Mod {
   static const u64 SIB = 0;
   static const u64 DISP_ONLY = 0;
