@@ -1,10 +1,17 @@
 #+CAPTION: compiler tasks
 | Task                                          | Priority |
 |-----------------------------------------------+----------|
+| Rework API to support 3 argument instructions | 5/5      |
 | Nice C++ wrappers around cstdlib              | 4/5      |
 | For loops                                     | 4/5      |
-| Composite types model                         | 4/5      |
+| Composite types (structs?) model              | 4/5      |
+| Implement [memory]x[memory] ops               | 4/5      |
+| call & ailcall ops                            | 4/5      |
 | Align jmp labels for loops and if/else        | 3/5      |
 | SIMD ops                                      | 3/5      |
 | float32/64 ops                                | 3/5      |
+| Negation op for float32/64                    | 3/5      |
 | Support for expressions                       | 3/5      |
+| String / 8bit ops                             | 3/5      |
+| Flags support (optimization level params)     | 3/5      |
+
