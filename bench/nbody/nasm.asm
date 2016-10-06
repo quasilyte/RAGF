@@ -1,3 +1,5 @@
+;; nasm x86_64 version of jruby program by quasilyte
+
 global main
 
 extern printf
