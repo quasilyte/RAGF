@@ -49,8 +49,7 @@ def energy(bodies)
   for i in 0 ... nbodies 
     b = bodies[i]
 
-    x = ((b.vx * b.vx) + (b.vy * b.vy) + (b.vz * b.vz))
-    e = e + (0.5 * b.mass * x)
+    e += 0.5 * b.mass * (b.vx * b.vx + b.vy * b.vy + b.vz * b.vz)
 
     for j in (i + 1) ... nbodies
       b2 = bodies[j]
@@ -58,7 +57,7 @@ def energy(bodies)
       dy = b.y - b2.y
       dz = b.z - b2.z
       distance = Math.sqrt(dx * dx + dy * dy + dz * dz)
-      e = e - (b.mass * b2.mass) / distance
+      e -= (b.mass * b2.mass) / distance
     end
   end
   e
