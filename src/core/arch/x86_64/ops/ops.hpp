@@ -53,7 +53,6 @@ OP2_DECL(Sub, dst, src);
 OP2_DECL(And, dst, src);
 OP2_DECL(Xor, dst, src);
 OP2_DECL(Or, dst, src);
-OP2_DECL(Xchg, a, b);
 OP2_DECL(Cmp, a, b);
 OP2_DECL(Shl, r, count);
 OP2_DECL(Shr, r, count);

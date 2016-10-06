@@ -13,12 +13,3 @@ void Cqo::write(CodeBuf* output) {
   output->write_byte(REX_W);
   output->write_byte(0x99);
 }
-
-template<>
-void Xchg::write(CodeBuf* output, Reg a, Reg b) {
-  output->write(BinaryValue<4>{
-    REX_WRB,
-    opcode(0x87),
-    mod_reg_rm(Mod::REG, a, b)
-  });
-}

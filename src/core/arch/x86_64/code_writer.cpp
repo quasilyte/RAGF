@@ -30,7 +30,10 @@ void CodeWriter::write_pop(const Reg* regs, int count) {
 }
 
 void CodeWriter::write_swap(Reg a, Reg b) {
-  Xchg::write(&$output, a, b);
+  // It is faster than `xchg a, b`
+  Mov::write(&$output, RAX, a);
+  Mov::write(&$output, a, b);
+  Mov::write(&$output, b, RAX);
 }
 
 void CodeWriter::write_swap(Mem a, Mem b) {
