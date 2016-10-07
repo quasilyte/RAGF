@@ -6,7 +6,7 @@
 | For loops                                     | 4/5      |
 | Composite types (structs?) model              | 4/5      |
 | Implement [memory]x[memory] ops               | 4/5      |
-| call & ailcall ops                            | 4/5      |
+| call & tailcall ops                           | 4/5      |
 | Align jmp labels for loops and if/else        | 3/5      |
 | SIMD ops                                      | 3/5      |
 | float32/64 ops                                | 3/5      |
@@ -14,4 +14,5 @@
 | Support for expressions                       | 3/5      |
 | String / 8bit ops                             | 3/5      |
 | Flags support (optimization level params)     | 3/5      |
+| Check lea&add mixing on different machines    | 3/5      |
 
