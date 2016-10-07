@@ -15,8 +15,7 @@ void Compiler::parse_return() {
   switch ($input.read<Token>()) {
   case T1(NIL):
     return $writer->write_return();
-  case T1(INT_REG):
-  case T1(UINT_REG):
+  case T1(REG):
     return $writer->write_return($input.read<Reg>());
 
   default:
@@ -26,8 +25,7 @@ void Compiler::parse_return() {
 
 void Compiler::parse_swap() {
   switch ($input.read<u16>()) {
-  case T2(INT_REG, INT_REG):
-  case T2(UINT_REG, UINT_REG):
+  case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_swap);
   case T2(MEM, MEM):
     return encode<Mem, Mem>(&CodeWriter::write_swap);
@@ -40,16 +38,11 @@ void Compiler::parse_neg() {
 
 void Compiler::parse_add() {
   switch ($input.read<u16>()) {
-  case T2(INT_REG, INT):
-  case T2(UINT_REG, INT):
+  case T2(REG, INT):
     return encode<Reg, i64>(&CodeWriter::write_add);
-  case T2(INT_REG, INT_REG):
-  case T2(INT_REG, UINT_REG):
-  case T2(UINT_REG, UINT_REG):
-  case T2(UINT_REG, INT_REG):
+  case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_add);
-  case T2(INT_REG, MEM):
-  case T2(UINT_REG, MEM):
+  case T2(REG, MEM):
     return encode<Reg, Mem>(&CodeWriter::write_add);
 
   default:
@@ -59,16 +52,11 @@ void Compiler::parse_add() {
 
 void Compiler::parse_sub() {
   switch ($input.read<u16>()) {
-  case T2(INT_REG, INT):
-  case T2(UINT_REG, INT):
+  case T2(REG, INT):
     return encode<Reg, i64>(&CodeWriter::write_sub);
-  case T2(INT_REG, INT_REG):
-  case T2(INT_REG, UINT_REG):
-  case T2(UINT_REG, UINT_REG):
-  case T2(UINT_REG, INT_REG):
+  case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_sub);
-  case T2(INT_REG, MEM):
-  case T2(UINT_REG, MEM):
+  case T2(REG, MEM):
     return encode<Reg, Mem>(&CodeWriter::write_sub);
 
   default:
@@ -110,10 +98,7 @@ void Compiler::parse_mod() {
 
 void Compiler::parse_bit_and() {
   switch ($input.read<u16>()) {
-  case T2(INT_REG, INT_REG):
-  case T2(INT_REG, UINT_REG):
-  case T2(UINT_REG, UINT_REG):
-  case T2(UINT_REG, INT_REG):
+  case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_bit_and);
 
   default:
@@ -123,10 +108,7 @@ void Compiler::parse_bit_and() {
 
 void Compiler::parse_bit_or() {
   switch ($input.read<u16>()) {
-  case T2(INT_REG, INT_REG):
-  case T2(INT_REG, UINT_REG):
-  case T2(UINT_REG, UINT_REG):
-  case T2(UINT_REG, INT_REG):
+  case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_bit_or);
 
   default:
@@ -160,17 +142,19 @@ void Compiler::parse_shift_right() {
 
 void Compiler::parse_assign() {
   switch ($input.read<u16>()) {
-  case T2(INT_REG, INT_REG):
-  case T2(UINT_REG, UINT_REG):
+  case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_assign);
+
   case T2(INT_REG, INT):
     return encode<Reg, i64>(&CodeWriter::write_assign);
+
   case T2(INT_REG, MEM):
     return encode<Reg, Mem>(&CodeWriter::write_assign);
+
   case T2(MEM, INT_REG):
     return encode<Mem, Reg>(&CodeWriter::write_assign);
-  case T2(INT_REG, DATA):
-  case T2(UINT_REG, DATA):
+
+  case T2(REG, DATA):
     return $writer->write_assign($input.read<Reg>(), DataReg{});
 
   default:
@@ -180,8 +164,7 @@ void Compiler::parse_assign() {
 
 void Compiler::parse_while() {
   switch ($input.read<u32>()) {
-  case T4(NEQ, INT_REG, INT, NIL):
-  case T4(NEQ, UINT_REG, INT, NIL):
+  case T4(NEQ, REG, INT, NIL):
     return encode<Reg, Imm>(&CodeWriter::write_while_neq);
 
   default:
@@ -191,8 +174,7 @@ void Compiler::parse_while() {
 
 void Compiler::parse_if() {
   switch ($input.read<u32>()) {
-  case T4(EQ, INT_REG, INT, NIL):
-  case T4(EQ, UINT_REG, INT, NIL):
+  case T4(EQ, REG, INT, NIL):
     return encode<Reg, Imm>(&CodeWriter::write_if_eq);
 
   default:
@@ -224,8 +206,7 @@ void Compiler::parse_pop() {
 
 void Compiler::parse_if_else() {
   switch ($input.read<u32>()) {
-  case T4(EQ, INT_REG, INT, NIL):
-  case T4(EQ, UINT_REG, INT, NIL):
+  case T4(EQ, REG, INT, NIL):
     return encode<Reg, Imm>(&CodeWriter::write_if_else_eq);
 
   default:
