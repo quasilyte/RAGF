@@ -8,6 +8,10 @@
 #include <core/typedefs.hpp>
 #include <core/args.hpp>
 
+constexpr byte sib(uint scale, uint index, uint base) {
+  return (scale << 6) + (index << 3) + base;
+}
+
 //! @brief REX prefix from single value
 constexpr byte rex(uint val) noexcept {
   return (0b0100 << 4) + val;
@@ -32,4 +36,3 @@ constexpr byte opcode(uint val, Reg index = 0) noexcept {
 constexpr u16 opcode(uint b1, uint b2) noexcept {
   return b1 + (b2 << 8);
 }
-

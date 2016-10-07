@@ -8,13 +8,14 @@
 #include <core/typedefs.hpp>
 #include <core/arch/x86_64/gpr.hpp>
 
-//                     ----WRXB     hex
-const byte REX     = 0b01000000; // 40
-const byte REX_W   = 0b01001000; // 48
-const byte REX_B   = 0b01000001; // 41
-const byte REX_WB  = 0b01001001; // 49
-const byte REX_WRB = 0b01001101; // 4d
-const byte REX_WR  = 0b01001100; // 4c
+//                      ----WRXB     hex
+const byte REX      = 0b01000000; // 40
+const byte REX_W    = 0b01001000; // 48
+const byte REX_B    = 0b01000001; // 41
+const byte REX_WB   = 0b01001001; // 49
+const byte REX_WRB  = 0b01001101; // 4d
+const byte REX_WR   = 0b01001100; // 4c
+const byte REX_WRXB = 0b01001111; // 4f
 
 const Gpr RAX{0};
 const Gpr RCX{1};

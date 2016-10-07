@@ -37,7 +37,8 @@ public:
   virtual void write_assign(Mem, Reg);
   virtual void write_assign(Reg, DataReg);
 
-  virtual void write_add(Reg, Imm);
+  virtual void write_add(Reg, Reg, Imm);
+  virtual void write_add(Reg, Reg, Reg);
   virtual void write_add(Reg, Reg);
   virtual void write_add(Reg, Mem);
 

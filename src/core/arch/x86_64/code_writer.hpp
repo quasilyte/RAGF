@@ -27,7 +27,8 @@ public:
   void write_assign(Mem dst, Reg src) override;
   void write_assign(Reg, DataReg) override;
 
-  void write_add(Reg, Imm) override;
+  void write_add(Reg, Reg, Imm) override;
+  void write_add(Reg, Reg, Reg) override;
   void write_add(Reg, Reg) override;
   void write_add(Reg, Mem) override;
 

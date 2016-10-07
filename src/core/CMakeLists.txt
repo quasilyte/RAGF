@@ -22,6 +22,7 @@ set(
   arch/x86_64/ops/bitwise_ops.cpp
   arch/x86_64/ops/fn_ops.cpp
   arch/x86_64/ops/misc_ops.cpp
+  arch/x86_64/ops/lea.cpp
 )
 
 add_library(ragf_core STATIC ${ragf_core_src})

@@ -71,9 +71,22 @@ void CodeWriter::write_assign(Reg dst, DataReg) {
   Mov::write(&$output, dst, RDI);
 }
 
-void CodeWriter::write_add(Reg dst, Imm src) {
-  if (src == 0) return;
-  Add::write(&$output, dst, src);
+void CodeWriter::write_add(Reg dst, Reg a, Imm b) {
+  if (b == 0) return;
+
+  if (dst == a) {
+    Add::write(&$output, dst, b);
+  } else {
+    Lea::write(&$output, dst, a, b);
+  }
+}
+
+void CodeWriter::write_add(Reg dst, Reg a, Reg b) {
+  if (dst == a) {
+    Add::write(&$output, dst, b);
+  } else {
+    Lea::write(&$output, dst, a, b);
+  }
 }
 
 void CodeWriter::write_add(Reg dst, Reg src) {

@@ -37,12 +37,12 @@ void Compiler::parse_neg() {
 }
 
 void Compiler::parse_add() {
-  switch ($input.read<u16>()) {
-  case T2(REG, INT):
-    return encode<Reg, i64>(&CodeWriter::write_add);
-  case T2(REG, REG):
-    return encode<Reg, Reg>(&CodeWriter::write_add);
-  case T2(REG, MEM):
+  switch ($input.read<u32>()) {
+  case T4(REG, REG, INT, NIL):
+    return encode<Reg, Reg, i64>(&CodeWriter::write_add);
+  case T4(REG, REG, REG, NIL):
+    return encode<Reg, Reg, Reg>(&CodeWriter::write_add);
+  case T4(REG, MEM, NIL, NIL): // #FIXME
     return encode<Reg, Mem>(&CodeWriter::write_add);
 
   default:

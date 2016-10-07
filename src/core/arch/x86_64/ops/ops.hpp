@@ -68,6 +68,10 @@ struct Mov {
   SIG3(dst, mem_src, disp);
 };
 
+struct Lea {
+  SIG3(dst, a, b);
+};
+
 #undef SIG1
 #undef SIG2
 #undef SIG3

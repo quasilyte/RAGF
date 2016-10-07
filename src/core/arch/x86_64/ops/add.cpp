@@ -7,7 +7,7 @@
 template<>
 void Add::write(CodeBuf* output, Reg dst, i64 src) {
   if (fits_i8(src)) {
-    output->write(BinaryValue<8>{
+    output->write(BinaryValue<4>{
       REX_WB,
       opcode(0x83),
       mod_reg_rm(Mod::REG, 0, dst),

@@ -43,7 +43,8 @@ MOCK(write_assign(Reg, Mem))
 MOCK(write_assign(Mem, Reg))
 MOCK(write_assign(Reg, DataReg))
 
-MOCK(write_add(Reg, Imm))
+MOCK(write_add(Reg, Reg, Imm))
+MOCK(write_add(Reg, Reg, Reg))
 MOCK(write_add(Reg, Reg))
 MOCK(write_add(Reg, Mem))
 
