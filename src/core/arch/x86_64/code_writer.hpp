@@ -32,8 +32,8 @@ public:
   void write_add(Reg, Reg) override;
   void write_add(Reg, Mem) override;
 
-  void write_sub(Reg, Imm) override;
-  void write_sub(Reg, Reg) override;
+  void write_sub(Reg, Reg, Imm) override;
+  void write_sub(Reg, Reg, Reg) override;
   void write_sub(Reg, Mem) override;
 
   void write_mul(IntReg, Imm) override;

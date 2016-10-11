@@ -97,13 +97,18 @@ void CodeWriter::write_add(Reg dst, Mem src) {
   Add::write(&$output, dst, src);
 }
 
-void CodeWriter::write_sub(Reg dst, Imm src) {
-  if (src == 0) return;
-  Sub::write(&$output, dst, src);
+void CodeWriter::write_sub(Reg dst, Reg a, Imm b) {
+  if (b == 0) return;
+
+  if (dst == a) {
+    Sub::write(&$output, dst, b);
+  } else {
+    Lea::write(&$output, dst, a, b);
+  }
 }
 
-void CodeWriter::write_sub(Reg dst, Reg src) {
-  Sub::write(&$output, dst, src);
+void CodeWriter::write_sub(Reg dst, Reg a, Reg b) {
+  Sub::write(&$output, dst, b);
 }
 
 void CodeWriter::write_sub(Reg dst, Mem src) {

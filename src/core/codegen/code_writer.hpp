@@ -42,8 +42,8 @@ public:
   virtual void write_add(Reg, Reg);
   virtual void write_add(Reg, Mem);
 
-  virtual void write_sub(Reg, Imm);
-  virtual void write_sub(Reg, Reg);
+  virtual void write_sub(Reg, Reg, Imm);
+  virtual void write_sub(Reg, Reg, Reg);
   virtual void write_sub(Reg, Mem);
 
   virtual void write_mul(IntReg, Imm);

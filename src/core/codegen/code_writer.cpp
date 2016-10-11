@@ -48,8 +48,8 @@ MOCK(write_add(Reg, Reg, Reg))
 MOCK(write_add(Reg, Reg))
 MOCK(write_add(Reg, Mem))
 
-MOCK(write_sub(Reg, Imm))
-MOCK(write_sub(Reg, Reg))
+MOCK(write_sub(Reg, Reg, Imm))
+MOCK(write_sub(Reg, Reg, Reg))
 MOCK(write_sub(Reg, Mem))
 
 MOCK(write_mul(IntReg, Imm))

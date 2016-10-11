@@ -16,20 +16,20 @@ template<> int Cmp::size(Reg, i64 imm) {
 template<>
 void Cmp::write(CodeBuf* output, Reg a, i64 b) {
   if (fits_i8(b)) {
-    output->write(BinaryValue<4>{
+    *output << BinaryValue<4>{
       REX_WB,
       opcode(0x83),
       mod_reg_rm(Mod::REG, 7, a),
       (i8)b
-    });
+    };
   }
   else if (fits_i32(b)) {
-    output->write(BinaryValue<8>{
+    *output << BinaryValue<8>{
       REX_WB,
       opcode(0x81),
       mod_reg_rm(Mod::REG, 7, a),
       (i32)b
-    });
+    };
   }
   else {
     throw "cmp: only {8,32} bit immediates are implemented";

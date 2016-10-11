@@ -5,9 +5,9 @@
 
 template<>
 void Idiv::write(CodeBuf* output, IntReg divider) {
-  output->write(BinaryValue<8>{
+  *output << BinaryValue<8>{
     REX_WB,
     opcode(0xF7),
     mod_reg_rm(Mod::REG, 7, divider)
-  });
+  };
 }

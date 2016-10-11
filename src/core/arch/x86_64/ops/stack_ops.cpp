@@ -5,16 +5,16 @@
 
 template<>
 void Push::write(CodeBuf* output, Reg r) {
-  output->write(BinaryValue<2>{
+  *output << BinaryValue<2>{
     REX_B,
     opcode(0x50, r)
-  });
+  };
 }
 
 template<>
 void Pop::write(CodeBuf* output, Reg r) {
-  output->write(BinaryValue<2>{
+  *output << BinaryValue<2>{
     REX_B,
     opcode(0x58, r)
-  });
+  };
 }

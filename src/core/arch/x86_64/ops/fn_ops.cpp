@@ -10,9 +10,9 @@ void Ret::write(CodeBuf* output) {
 
 template<>
 void Call::write(CodeBuf* output, Reg fn_ptr) {
-  output->write(BinaryValue<4>{
+  *output << BinaryValue<4>{
     REX_B,
     opcode(0xFF),
     mod_reg_rm(Mod::REG, 2, fn_ptr)
-  });
+  };
 }

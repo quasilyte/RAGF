@@ -7,12 +7,12 @@
 template<>
 void Imul::write(CodeBuf* output, IntReg dst, IntReg a, i64 src) {
   if (fits_i8(src)) {
-    output->write(BinaryValue<4>{
+    *output << BinaryValue<4>{
       REX_WRB,
       opcode(0x6B),
       mod_reg_rm(Mod::REG, dst, a),
       (i8)src
-    });
+    };
   }
   else {
     throw "imul: only 8 bit immediates are implemented";
@@ -21,9 +21,9 @@ void Imul::write(CodeBuf* output, IntReg dst, IntReg a, i64 src) {
 
 template<>
 void Imul::write(CodeBuf* output, IntReg dst, IntReg src) {
-  output->write(BinaryValue<4>{
+  *output << BinaryValue<4>{
     REX_WRB,
     opcode(0x0F, 0xAF),
     mod_reg_rm(Mod::REG, dst, src)
-  });
+  };
 }
