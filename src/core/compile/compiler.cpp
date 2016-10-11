@@ -51,12 +51,12 @@ void Compiler::parse_add() {
 }
 
 void Compiler::parse_sub() {
-  switch ($input.read<u16>()) {
-  case T2(REG, INT):
-    return encode<Reg, i64>(&CodeWriter::write_sub);
-  case T2(REG, REG):
-    return encode<Reg, Reg>(&CodeWriter::write_sub);
-  case T2(REG, MEM):
+  switch ($input.read<u32>()) {
+  case T4(REG, REG, INT, NIL):
+    return encode<Reg, Reg, i64>(&CodeWriter::write_sub);
+  case T4(REG, REG, REG, NIL):
+    return encode<Reg, Reg, Reg>(&CodeWriter::write_sub);
+  case T4(REG, MEM, NIL, NIL): // #FIXME
     return encode<Reg, Mem>(&CodeWriter::write_sub);
 
   default:
