@@ -35,11 +35,11 @@ template<>
 u8 TokenStream::read() { return read_byte(); }
 
 template<>
-Mem TokenStream::read() {
+PtrReg TokenStream::read() {
   Reg r = read<Reg>();
-  int byte_count = read<i8>();
-  int index = read<i32>();
-  return Mem{r, byte_count, index};
+  int obj_size = read<i8>();
+  int disp = read<i32>();
+  return PtrReg{r, obj_size, disp};
 }
 
 byte TokenStream::read_byte() noexcept {

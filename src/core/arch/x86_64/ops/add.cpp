@@ -17,7 +17,7 @@ void Add::write(CodeBuf* output, Reg dst, i64 src) {
   else if (fits_i32(src)) {
     *output << BinaryValue<8>{
       REX_WB,
-      opcode(0x83),
+      opcode(0x81),
       mod_reg_rm(Mod::REG, 0, dst),
       (i32)src
     };
@@ -37,9 +37,9 @@ void Add::write(CodeBuf *output, Reg dst, Reg src) {
 }
 
 template<>
-void Add::write(CodeBuf* output, Reg dst, Mem src) {
-  if (src.byte_count == 8) {
-    if (src.disp() == 0) {
+void Add::write(CodeBuf* output, Reg dst, PtrReg src) {
+  if (src.obj_size == 8) {
+    if (src.disp == 0) {
       *output << BinaryValue<4>{
         REX_WRB,
         opcode(0x03),

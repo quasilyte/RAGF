@@ -11,7 +11,7 @@ void Sub::write(CodeBuf* output, Reg dst, i64 src) {
       REX_WB,
       opcode(0x83),
       mod_reg_rm(Mod::REG, 5, dst),
-      src
+      (i8)src
     };
   }
   else if (fits_i32(src)) {
@@ -19,7 +19,7 @@ void Sub::write(CodeBuf* output, Reg dst, i64 src) {
       REX_WB,
       opcode(0x81),
       mod_reg_rm(Mod::REG, 5, dst),
-      src
+      (i32)src
     };
   }
   else {
@@ -37,9 +37,9 @@ void Sub::write(CodeBuf* output, Reg dst, Reg src) {
 }
 
 template<>
-void Sub::write(CodeBuf* output, Reg dst, Mem src) {
-  if (src.byte_count == 8) {
-    if (src.disp() == 0) {
+void Sub::write(CodeBuf* output, Reg dst, PtrReg src) {
+  if (src.obj_size == 8) {
+    if (src.disp == 0) {
       *output << BinaryValue<4>{
         REX_WRB,
         opcode(0x2B),
@@ -53,4 +53,13 @@ void Sub::write(CodeBuf* output, Reg dst, Mem src) {
   else {
     throw "sub: invalid memory cell size";
   }
+}
+
+template<>
+void Sub::write(CodeBuf* output, Gpr dst, Reg src) {
+  *output << BinaryValue<4>{
+    REX_WR,
+    opcode(0x29),
+    mod_reg_rm(Mod::REG, src, dst)
+  };
 }

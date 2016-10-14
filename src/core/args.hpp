@@ -34,20 +34,16 @@ struct IntReg: Reg {
 /*!
  * @brief Struct representing a memory dereference
  *
- * Mem used to express dereferenced memory location
- * at some index.
- * Index + byte count are used to produce proper displacement.
+ * PtrReg used to express dereferenced memory location
+ * at some displacement.
  */
-struct Mem {
+struct PtrReg {
   //! @brief Register that contains base address
   Reg ptr;
-  //! @brief Byte size of each memory cell (used for indexind)
-  int byte_count;
-  //! @brief Positive or negative index to be dereferenced
-  int index;
-
-  //! @brief Calculates displacement
-  int disp() const { return byte_count * index; }
+  //! @brief Byte size of element pointed to
+  int obj_size;
+  //! @brief Positive or negative displacement in bytes
+  int disp;
 };
 
 //! @brief Immutable pseudo register that holds data pointer

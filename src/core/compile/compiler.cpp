@@ -28,7 +28,7 @@ void Compiler::parse_swap() {
   case T2(REG, REG):
     return encode<Reg, Reg>(&CodeWriter::write_swap);
   case T2(MEM, MEM):
-    return encode<Mem, Mem>(&CodeWriter::write_swap);
+    return encode<PtrReg, PtrReg>(&CodeWriter::write_swap);
   }
 }
 
@@ -43,7 +43,7 @@ void Compiler::parse_add() {
   case T4(REG, REG, REG, NIL):
     return encode<Reg, Reg, Reg>(&CodeWriter::write_add);
   case T4(REG, MEM, NIL, NIL): // #FIXME
-    return encode<Reg, Mem>(&CodeWriter::write_add);
+    return encode<Reg, PtrReg>(&CodeWriter::write_add);
 
   default:
     throw "add: invalid dst/src token";
@@ -57,7 +57,7 @@ void Compiler::parse_sub() {
   case T4(REG, REG, REG, NIL):
     return encode<Reg, Reg, Reg>(&CodeWriter::write_sub);
   case T4(REG, MEM, NIL, NIL): // #FIXME
-    return encode<Reg, Mem>(&CodeWriter::write_sub);
+    return encode<Reg, PtrReg>(&CodeWriter::write_sub);
 
   default:
     throw "sub: invalid dst/src token";
@@ -149,10 +149,10 @@ void Compiler::parse_assign() {
     return encode<Reg, i64>(&CodeWriter::write_assign);
 
   case T2(INT_REG, MEM):
-    return encode<Reg, Mem>(&CodeWriter::write_assign);
+    return encode<Reg, PtrReg>(&CodeWriter::write_assign);
 
   case T2(MEM, INT_REG):
-    return encode<Mem, Reg>(&CodeWriter::write_assign);
+    return encode<PtrReg, Reg>(&CodeWriter::write_assign);
 
   case T2(REG, DATA):
     return $writer->write_assign($input.read<Reg>(), DataReg{});

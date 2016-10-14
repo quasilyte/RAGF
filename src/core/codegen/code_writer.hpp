@@ -29,22 +29,21 @@ public:
   virtual void write_neg(Reg);
 
   virtual void write_swap(Reg, Reg);
-  virtual void write_swap(Mem, Mem);
+  virtual void write_swap(PtrReg, PtrReg);
 
   virtual void write_assign(Reg, Imm);
   virtual void write_assign(Reg dst, Reg src);
-  virtual void write_assign(Reg, Mem);
-  virtual void write_assign(Mem, Reg);
+  virtual void write_assign(Reg, PtrReg);
+  virtual void write_assign(PtrReg, Reg);
   virtual void write_assign(Reg, DataReg);
 
   virtual void write_add(Reg, Reg, Imm);
   virtual void write_add(Reg, Reg, Reg);
-  virtual void write_add(Reg, Reg);
-  virtual void write_add(Reg, Mem);
+  virtual void write_add(Reg, PtrReg);
 
   virtual void write_sub(Reg, Reg, Imm);
   virtual void write_sub(Reg, Reg, Reg);
-  virtual void write_sub(Reg, Mem);
+  virtual void write_sub(Reg, PtrReg);
 
   virtual void write_mul(IntReg, Imm);
   virtual void write_mul(IntReg, IntReg);

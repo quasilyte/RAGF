@@ -33,24 +33,23 @@ MOCK(write_push(const Reg*, int))
 MOCK(write_pop(const Reg*, int))
 
 MOCK(write_swap(Reg, Reg))
-MOCK(write_swap(Mem, Mem))
+MOCK(write_swap(PtrReg, PtrReg))
 
 MOCK(write_neg(Reg))
 
 MOCK(write_assign(Reg, Reg))
 MOCK(write_assign(Reg, Imm))
-MOCK(write_assign(Reg, Mem))
-MOCK(write_assign(Mem, Reg))
+MOCK(write_assign(Reg, PtrReg))
+MOCK(write_assign(PtrReg, Reg))
 MOCK(write_assign(Reg, DataReg))
 
 MOCK(write_add(Reg, Reg, Imm))
 MOCK(write_add(Reg, Reg, Reg))
-MOCK(write_add(Reg, Reg))
-MOCK(write_add(Reg, Mem))
+MOCK(write_add(Reg, PtrReg))
 
 MOCK(write_sub(Reg, Reg, Imm))
 MOCK(write_sub(Reg, Reg, Reg))
-MOCK(write_sub(Reg, Mem))
+MOCK(write_sub(Reg, PtrReg))
 
 MOCK(write_mul(IntReg, Imm))
 MOCK(write_mul(IntReg, IntReg))

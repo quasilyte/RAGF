@@ -36,7 +36,7 @@ void CodeWriter::write_swap(Reg a, Reg b) {
   Mov::write(&$output, b, RAX);
 }
 
-void CodeWriter::write_swap(Mem a, Mem b) {
+void CodeWriter::write_swap(PtrReg a, PtrReg b) {
   Mov::write(&$output, RAX, a);
   Mov::write(&$output, RCX, b);
   Mov::write(&$output, a, RCX);
@@ -59,11 +59,11 @@ void CodeWriter::write_assign(Reg dst, Imm src) {
   }
 }
 
-void CodeWriter::write_assign(Reg dst, Mem src) {
+void CodeWriter::write_assign(Reg dst, PtrReg src) {
   Mov::write(&$output, dst, src);
 }
 
-void CodeWriter::write_assign(Mem dst, Reg src) {
+void CodeWriter::write_assign(PtrReg dst, Reg src) {
   Mov::write(&$output, dst, src);
 }
 
@@ -89,11 +89,7 @@ void CodeWriter::write_add(Reg dst, Reg a, Reg b) {
   }
 }
 
-void CodeWriter::write_add(Reg dst, Reg src) {
-  Add::write(&$output, dst, src);
-}
-
-void CodeWriter::write_add(Reg dst, Mem src) {
+void CodeWriter::write_add(Reg dst, PtrReg src) {
   Add::write(&$output, dst, src);
 }
 
@@ -103,15 +99,24 @@ void CodeWriter::write_sub(Reg dst, Reg a, Imm b) {
   if (dst == a) {
     Sub::write(&$output, dst, b);
   } else {
-    Lea::write(&$output, dst, a, b);
+    throw "unimplemented";
+//    Mov::write(&$output, RAX, b);
+//    Sub::write(&$output, RAX, b);
+//    Mov::write(&$output, dst, RAX);
   }
 }
 
 void CodeWriter::write_sub(Reg dst, Reg a, Reg b) {
-  Sub::write(&$output, dst, b);
+  if (dst == a) {
+    Sub::write(&$output, dst, b);
+  } else {
+    Mov::write(&$output, RAX, b);
+    Sub::write(&$output, RAX, b);
+    Mov::write(&$output, dst, RAX);
+  }
 }
 
-void CodeWriter::write_sub(Reg dst, Mem src) {
+void CodeWriter::write_sub(Reg dst, PtrReg src) {
   Sub::write(&$output, dst, src);
 }
 
