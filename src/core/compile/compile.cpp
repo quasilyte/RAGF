@@ -9,10 +9,9 @@
 
 #include <cstdlib>
 
-Buf compile_x86_64(const byte* binary_tokens) {
+Buf compile_x86_64(const byte* binary_tokens, Buf output) {
   TokenStream tokens{binary_tokens};
 
-  CodeBuf output{Buf{static_cast<byte*>(calloc(64, 1)), 64}};
   x86_64::CodeWriter writer{output};
   Compiler compiler{tokens};
 
@@ -20,4 +19,9 @@ Buf compile_x86_64(const byte* binary_tokens) {
   compiler.set_writer(&writer);
 
   return compiler.compile();
+}
+
+Buf compile_x86_64(const byte* binary_tokens) {
+  Buf output{static_cast<byte*>(calloc(64, 1)), 64};
+  return compile_x86_64(binary_tokens, output);
 }
