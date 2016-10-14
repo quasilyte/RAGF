@@ -8,6 +8,8 @@ extern "C" {
 
 #define byte uint8_t
 
+void run_void(void* data, const byte* code);
+
 int8_t run_int8(void* data, const byte* code);
 int16_t run_int16(void* data, const byte* code);
 int32_t run_int32(void* data, const byte* code);
