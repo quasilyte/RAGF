@@ -1,0 +1,4 @@
+| Library/framework   | Role               |
+|---------------------+--------------------|
+| GTest (google test) | C++ test framework |
+|                     |                    |

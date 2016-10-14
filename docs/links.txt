@@ -4,3 +4,6 @@ http://www.c-jump.com/CIS77/CPU/x86/lecture.html
 calling conventions
 http://wiki.osdev.org/Calling_Conventions
 https://people.freebsd.org/~obrien/amd64-elf-abi.pdf
+
+asmjit
+https://github.com/asmjit/asmjit
