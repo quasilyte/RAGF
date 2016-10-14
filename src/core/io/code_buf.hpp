@@ -23,9 +23,13 @@ public:
 //    write_bytes(bytes_provider.get_bytes(), bytes_provider.get_len());
 //  }
 
+  CodeBuf& operator<<(byte val) {
+    write_byte(val);
+    return *this;
+  }
+
   template<class T>
   CodeBuf& operator<<(T bytes_provider) noexcept {
-//    write(bytes_provider);
     write_bytes(bytes_provider.get_bytes(), bytes_provider.get_len());
     return *this;
   }
